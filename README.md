@@ -26,7 +26,7 @@ Unlike [Banca Remota](https://github.com/albertolicea00/BancaRemota) (multi-bank
 
 ## Pages
 
-**`index.html`** — landing page: hero (with the Banca Remota app icon shown via a live hotlink to `bancaremota.vercel.app`), how-it-works (three steps), a catalog section (with the `ussd_codes.json` download), a comparison table, FAQ, roadmap, and an "Apps similares" section (replacing what used to be the in-page "Avísame" notify form — that form still lives in the modal triggered by the hero's "Avísame" button and the FAQ's "Suscríbete" link). Fetches `https://api.github.com/repos/albertolicea00/cubacell-connect` client-side to show live GitHub star count.
+**`index.html`** — landing page: hero, how-it-works (three steps), a catalog section (the `ussd_codes.json` download), a comparison table, FAQ, roadmap, and an **Apps similares** section (see below). Fetches `https://api.github.com/repos/albertolicea00/cubacell-connect` client-side to show live GitHub star count.
 
 **`dial.html`** — web USSD dialer: search the full ETECSA catalog by title, code or description; tap a card to open `tel:<code>` and place the call. Codes that need a variable value (a card number for `*662*{input}#`, a phone number for `#31#{input}#`) open a small input step first — mirrors the iOS app's `CodeDetailView` (dial disabled until non-empty, `#` percent-encoded as `%23`). Same dark mode, notify form, and iOS install guide as the landing page. See **Offline support** below for how it gets its data and works with no connection.
 
@@ -79,6 +79,18 @@ Push to `main` → Vercel auto-deploys. Add env vars from `.env.example` in the 
 | `--color-accent` | `#0099cc` | Cyan highlights |
 
 Matches the iOS app's brand palette (`CLAUDE.md`: navy `rgb(0, 0, 102)`, cyan `#09C`).
+
+Accents (section badges, primary buttons, the step-number circles, the hero's "desde tu iPhone") don't swap solid colors between light/dark — they all share a `gradientTravel` keyframe animation (`style.css`) that continuously shifts a navy→accent→navy gradient, same in both themes. Reuse it via the `.gradient-text` (text, `background-clip: text`) or `.gradient-bg` (backgrounds) utility classes rather than hardcoding another `linear-gradient(...); animation: gradientTravel ...` block.
+
+
+## More Apps
+
+Other USSD-code apps by the same author:
+
+- [Banca Remota](https://bancaremota.vercel.app/) — landing page + web dialer for the Banca Remota iOS app (USSD banking for BPA, BANDEC and BM), the sibling this repo was ported from.
+- [MyUSSDCodes iOS](https://github.com/albertolicea00/MyUSSDCodes-ios) — general-purpose iOS app (Swift/SwiftUI) to browse, organize and run USSD codes across any carrier/collection.
+- [MyUSSDCodes Android](https://github.com/albertolicea00/MyUSSDCodes-apk) — the same, for Android (Kotlin/Jetpack Compose).
+
 
 ## Contributing
 
