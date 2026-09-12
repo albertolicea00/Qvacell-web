@@ -10,6 +10,31 @@
 
 html { scroll-behavior: smooth; }
 
+/* ══════════════════════════════════════════
+   ANIMATED NAVY↔ACCENT GRADIENT
+   Shared by section badges, primary buttons, and
+   any accent text that wants the moving gradient
+   instead of a flat navy/accent theme swap.
+══════════════════════════════════════════ */
+@keyframes gradientTravel {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.gradient-text {
+  background: linear-gradient(90deg, var(--color-navy), var(--color-accent), var(--color-navy));
+  background-size: 200% auto;
+  animation: gradientTravel 4s ease infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.gradient-bg {
+  background: linear-gradient(135deg, var(--color-navy), var(--color-accent), var(--color-navy));
+  background-size: 200% 200%;
+  animation: gradientTravel 4s ease infinite;
+}
+
 /* Hide scrollbar while keeping scroll functional */
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -41,20 +66,22 @@ html { scroll-behavior: smooth; }
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: var(--color-navy);
+  background: linear-gradient(135deg, var(--color-navy), var(--color-accent), var(--color-navy));
+  background-size: 200% 200%;
+  animation: gradientTravel 4s ease infinite;
   color: #ffffff;
   font-weight: 700;
   padding: 1rem 1.2rem;
   border-radius: 1rem;
   font-size: 1rem;
   text-decoration: none;
-  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  transition: filter 0.2s, transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 8px 24px color-mix(in srgb, var(--color-navy) 35%, transparent);
 }
 .btn-primary:hover {
-  background: #000088;
+  filter: brightness(1.08);
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px color-mix(in srgb, var(--color-navy) 45%, transparent);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--color-accent) 45%, transparent);
 }
 
 .btn-ghost {
@@ -91,11 +118,15 @@ html { scroll-behavior: smooth; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--color-navy);
   padding: 0.25rem 0.875rem;
   margin-bottom: 0.75rem;
+  background: linear-gradient(90deg, var(--color-navy), var(--color-accent), var(--color-navy));
+  background-size: 200% auto;
+  animation: gradientTravel 4s ease infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
-.dark .section-badge { color: var(--color-accent); }
 
 .section-title {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
