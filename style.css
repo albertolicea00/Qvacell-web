@@ -185,35 +185,6 @@ html { scroll-behavior: smooth; }
   margin-top: 0.375rem;
 }
 
-/* ══════════════════════════════════════════
-   MANUAL ACCORDION
-══════════════════════════════════════════ */
-.manual-step {
-  background: #fff;
-  border-radius: 1rem;
-  border: 1px solid #f3f4f6;
-  overflow: hidden;
-  transition: box-shadow 0.2s;
-}
-.dark .manual-step { background: #1f2937; border-color: #374151; }
-
-.step-badge {
-  width: 2.25rem; height: 2.25rem;
-  border-radius: 9999px;
-  background: linear-gradient(135deg, var(--color-navy), #000099);
-  color: #fff;
-  font-weight: 800;
-  font-size: 1rem;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-navy) 40%, transparent);
-  border: 2px solid #fff;
-}
-.dark .step-badge {
-  border-color: #1f2937;
-  background: linear-gradient(135deg, var(--color-accent), #007299);
-}
-
 .code-inline {
   font-family: ui-monospace, 'Cascadia Code', monospace;
   font-size: 0.75rem;
@@ -223,16 +194,6 @@ html { scroll-behavior: smooth; }
   color: var(--color-navy);
 }
 .dark .code-inline { background: #374151; color: var(--color-accent); }
-
-kbd.kbd {
-  font-family: ui-monospace, monospace;
-  font-size: 0.75rem;
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.25rem;
-}
-.dark kbd.kbd { background: #374151; border-color: #4b5563; color: #e5e7eb; }
 
 /* ══════════════════════════════════════════
    FAQ ACCORDION
