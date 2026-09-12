@@ -26,7 +26,7 @@ Unlike [Banca Remota](https://github.com/albertolicea00/BancaRemota) (multi-bank
 
 ## Pages
 
-**`index.html`** — landing page: hero, feature walkthrough (scroll-pinned tabs, desktop only), how-it-works + integrated manual, ETECSA compatibility section with a catalog download link for contributors, comparison table, FAQ, roadmap, and the "Avísame" (notify me) subscribe form. Fetches `https://api.github.com/repos/albertolicea00/cubacell-connect` client-side to show live GitHub star count.
+**`index.html`** — landing page: hero (with the Banca Remota app icon shown via a live hotlink to `bancaremota.vercel.app`), how-it-works (three steps), a catalog section (with the `ussd_codes.json` download), a comparison table, FAQ, roadmap, and an "Apps similares" section (replacing what used to be the in-page "Avísame" notify form — that form still lives in the modal triggered by the hero's "Avísame" button and the FAQ's "Suscríbete" link). Fetches `https://api.github.com/repos/albertolicea00/cubacell-connect` client-side to show live GitHub star count.
 
 **`dial.html`** — web USSD dialer: search the full ETECSA catalog by title, code or description; tap a card to open `tel:<code>` and place the call. Codes that need a variable value (a card number for `*662*{input}#`, a phone number for `#31#{input}#`) open a small input step first — mirrors the iOS app's `CodeDetailView` (dial disabled until non-empty, `#` percent-encoded as `%23`). Same dark mode, notify form, and iOS install guide as the landing page. See **Offline support** below for how it gets its data and works with no connection.
 
