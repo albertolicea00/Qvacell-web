@@ -80,12 +80,6 @@ Push to `main` → Vercel auto-deploys. Add env vars from `.env.example` in the 
 
 Matches the iOS app's brand palette (`CLAUDE.md`: navy `rgb(0, 0, 102)`, cyan `#09C`).
 
-## Known placeholders — needed before launch
-
-- **`assets/icon-black.svg` / `icon-white.svg` / `favicon.svg` / `og-image.svg`** — simple generated placeholders, not final brand assets. `og-image.svg` in particular won't render on Twitter/Facebook (they require a raster PNG/JPG for `og:image`) — export a real 1200×630 image before sharing links publicly.
-- **`assets/mockups/*.svg`** — placeholder phone-screen illustrations standing in for real `HomeView`/`CodeDetailView` screenshots (light + dark) in the hero carousel and feature section. Same file names, drop in real exported screenshots (ideally `.webp`, matching Banca Remota's convention) to replace them without touching `index.html`.
-- **Brevo list** — `BREVO_LIST_ID` in `.env.example` is a placeholder; create a new list in the Brevo dashboard for this project and set the real ID as an env var (local `.env` + Vercel project settings).
-
 ## Contributing
 
 See the main project's [CONTRIBUTING.md](https://github.com/albertolicea00/cubacell-connect/blob/main/CONTRIBUTING.md). Issues, PRs, and commit messages must be in English.
