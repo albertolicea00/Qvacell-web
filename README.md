@@ -87,7 +87,7 @@ Accents (section badges, primary buttons, the step-number circles, the hero's "d
 
 Other USSD-code apps by the same author:
 
-- [Banca Remota](https://bancaremota.vercel.app/) — landing page + web dialer for the Banca Remota iOS app (USSD banking for BPA, BANDEC and BM), the sibling this repo was ported from.
+- [Banca Remota](https://bancaremota.vercel.app/) — landing page + web dialer for the Banca Remota iOS app (USSD banking for BPA, BANDEC and BM).
 - [MyUSSDCodes iOS](https://github.com/albertolicea00/MyUSSDCodes-ios) — general-purpose iOS app (Swift/SwiftUI) to browse, organize and run USSD codes across any carrier/collection.
 - [MyUSSDCodes Android](https://github.com/albertolicea00/MyUSSDCodes-apk) — the same, for Android (Kotlin/Jetpack Compose).
 
