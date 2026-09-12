@@ -8,7 +8,7 @@ function app() {
     faqs: [
       {
         q: '¿Necesito internet para usar la app?',
-        a: 'No. Cuba-cell Connect no usa internet en ningún momento. Todo funciona mediante códigos USSD sobre la red telefónica de ETECSA, igual que cuando marcas el código manualmente en el teléfono.'
+        a: 'No. CubaCell Connect no usa internet en ningún momento. Todo funciona mediante códigos USSD sobre la red telefónica de ETECSA, igual que cuando marcas el código manualmente en el teléfono.'
       },
       {
         q: '¿Es segura la app?',
@@ -19,7 +19,7 @@ function app() {
         a: 'Actualmente está en beta — solo disponible instalando desde el código fuente en GitHub. <button onclick="window.dispatchEvent(new CustomEvent(\'notify:open\'))" class="text-navy dark:text-accent underline cursor-pointer">Suscríbete</button> para recibir una notificación en cuanto se publique.'
       },
       {
-        q: '¿Puedo usar Cuba-cell Connect sin instalar la app?',
+        q: '¿Puedo usar CubaCell Connect sin instalar la app?',
         a: 'Sí. Entra a <a href="dial.html" class="text-navy dark:text-accent underline hover:no-underline">/dial</a> — el marcador USSD corriendo directo en el navegador, sin Xcode ni cuenta de desarrollador. Agrégalo a tu pantalla de inicio y funciona incluso sin internet: después de la primera visita, la página y el catálogo de códigos quedan guardados en el propio navegador.'
       },
       {
