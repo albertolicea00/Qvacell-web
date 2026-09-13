@@ -45,7 +45,7 @@ On iOS Safari (detected via UA / `MacIntel` + multi-touch, not standalone yet), 
 `dial.html` does not ship its own copy of the catalog — it always pulls the latest `ussd_codes.json` straight from the iOS app's repo, the exact file the app bundles:
 
 ```
-https://raw.githubusercontent.com/albertolicea00/cubacell-connect/refs/heads/main/CubacellConnect/Resources/ussd_codes.json
+https://raw.githubusercontent.com/albertolicea00/cubacell-connect/refs/heads/main/CubacellConnect/codes.json
 ```
 
 Codes are still fixed upstream in **[MyUSSDCodes-collection](https://github.com/albertolicea00/MyUSSDCodes-collection)** first (the source of truth shared across all of the author's USSD apps), then synced into this file — a weekly `ussd-sync-check` GitHub Action flags drift. Fetching the app repo's file directly (rather than MyUSSDCodes-collection) means this site never gets ahead of what the iOS app itself ships.
