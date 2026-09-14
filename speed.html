@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es" x-data="{ darkMode: document.documentElement.classList.contains('dark') }"
+  :class="{ 'dark': darkMode }" style="overflow-x:hidden">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Prueba de Velocidad — CubaCell Connect</title>
+  <meta name="description"
+    content="Mide ping, velocidad de descarga y subida de tu conexión a internet." />
+  <meta name="theme-color" content="#000066" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="apple-touch-icon" href="assets/icon-black.svg" />
+
+  <!-- Open Graph & Twitter -->
+  <meta property="og:title" content="CubaCell Connect — Prueba de Velocidad de Internet" />
+  <meta property="og:description"
+    content="Mide ping, velocidad de descarga y subida de tu conexión a internet." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/og-image.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CubaCell Connect — Prueba de Velocidad de Internet" />
+  <meta name="twitter:description" content="Mide ping, velocidad de descarga y subida de tu conexión a internet." />
+  <meta name="twitter:image" content="assets/og-image.svg" />
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="CubaCell Connect" />
+  <script>
+    (function () {
+      var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (isIOS) document.documentElement.classList.add('ios');
+      if (window.navigator.standalone === true) document.documentElement.classList.add('ios-standalone');
+    })();
+  </script>
+
+  <!-- Tailwind CDN + config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            navy: '#000066',
+            accent: '#0099cc',
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Segoe UI', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Pre-render Dark Mode Init -->
+  <script>
+    if (localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+
+  <style>
+    .ios-standalone .legal-footer { display: none; }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans antialiased transition-colors duration-300 overflow-x-hidden">
+
+  <!-- ════════════════════════════════════════
+       NAV (Mismo diseño exacto que dial.html)
+  ════════════════════════════════════════ -->
+  <nav id="dial-nav" style="z-index: 9999;"
+    class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="brand-logo-link flex items-center gap-2.5 font-bold text-navy dark:text-accent text-lg"
+        onclick="return !document.documentElement.classList.contains('ios-standalone')">
+        <img src="assets/icon-black.svg" alt="CubaCell Connect" class="w-8 h-8 dark:hidden rounded-lg shadow-sm" />
+        <img src="assets/icon-white.svg" alt="CubaCell Connect" class="w-8 h-8 hidden dark:block rounded-lg shadow-sm" />
+        <span class="hidden sm:inline text-gray-900 dark:text-white font-bold">CubaCell Connect</span>
+      </a>
+
+      <a href="index.html" aria-label="Volver al inicio" class="back-home-link
+        inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-navy dark:hover:text-accent transition-colors"
+        onclick="if (document.documentElement.classList.contains('ios-standalone')) { window.open('index.html', '_blank'); return false; }">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        <span class="sm:hidden">Inicio</span>
+        <span class="hidden sm:inline">Volver al inicio</span>
+      </a>
+
+      <div class="flex items-center gap-2">
+        <button @click="window.dispatchEvent(new CustomEvent('open-install-guide'))" type="button"
+          class="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300 text-sm font-medium"
+          aria-label="Instalar app">
+          <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+          </svg>
+          <span class="hidden sm:inline">Instalar</span>
+        </button>
+
+        <button @click="darkMode = !darkMode; localStorage.setItem('darkMode', darkMode)"
+          class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          :title="darkMode ? 'Modo claro' : 'Modo oscuro'">
+          <span x-show="!darkMode"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+            </svg></span>
+          <span x-show="darkMode"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 3v2.25m0 13.5V21m8.974-8.974h-2.25M4.25 12h2.25m13.308-7.308l-1.591 1.591M6.829 17.171l-1.591 1.591m12.932 0l-1.591-1.591M6.829 6.829L5.238 5.238M17.5 12A5.5 5.5 0 1112 6.5a5.5 5.5 0 015.5 5.5z" />
+            </svg></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div x-data="speedTestApp()" x-cloak>
+
+  <!-- Collapse toggle para standalone -->
+  <div x-show="isStandalone" x-cloak id="header-toggle-wrap" class="fixed left-1/2 -translate-x-1/2 z-40">
+    <button @click="toggleHeader()" type="button"
+      class="inline-flex items-center justify-center w-9 h-5 rounded-b-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-400 dark:text-gray-500 transition-colors shadow-sm"
+      :aria-label="headerCollapsed ? 'Mostrar encabezado' : 'Ocultar encabezado'"
+      :aria-expanded="(!headerCollapsed).toString()">
+      <svg class="w-3.5 h-3.5 transition-transform duration-200" :class="headerCollapsed ? '' : 'rotate-180'"
+        fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+  </div>
+
+  <main class="pt-24 pb-28 md:pb-16 px-4 sm:px-6 lg:px-8 min-h-screen bg-gray-50 dark:bg-[rgb(12,16,26)] relative overflow-hidden">
+
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute top-0 right-0 w-96 h-96 rounded-full bg-navy opacity-[0.08] dark:opacity-[0.05] blur-3xl"></div>
+      <div class="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-accent opacity-[0.10] dark:opacity-[0.06] blur-3xl"></div>
+    </div>
+
+    <div class="max-w-2xl mx-auto relative">
+
+      <div x-show="!headerCollapsed" x-transition.opacity.duration.150ms class="text-center mb-8">
+        <span class="section-badge">Prueba de Velocidad</span>
+        <h1 class="section-title">Medidor de Internet</h1>
+        <p class="section-subtitle">Mide ping, velocidad de descarga y subida de tu conexión.</p>
+      </div>
+
+      <!-- Card principal del Speed Test -->
+      <div class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl shadow-xl p-6 sm:p-8 text-center mb-8">
+        
+        <!-- Tacómetro SVG -->
+        <div class="relative w-64 h-36 mx-auto mb-4 flex justify-center items-end">
+          <svg class="w-64 h-36 overflow-visible" viewBox="0 0 200 110">
+            <!-- Pista base -->
+            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="currentColor" class="text-gray-200 dark:text-gray-800" stroke-width="12" stroke-linecap="round" />
+            <!-- Arco de progreso -->
+            <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="currentColor" class="text-navy dark:text-accent transition-all duration-150" stroke-width="12" stroke-linecap="round"
+              :stroke-dasharray="251.32" :stroke-dashoffset="251.32 * (1 - Math.min(Math.max(gaugeValue / gaugeMaxValue, 0), 1))" />
+            <!-- Aguja -->
+            <g :style="`transform: rotate(${needleDegrees}deg); transform-origin: 100px 100px; transition: transform 150ms ease-out;`">
+              <line x1="100" y1="100" x2="100" y2="30" stroke="currentColor" class="text-navy dark:text-accent" stroke-width="3.5" stroke-linecap="round" />
+              <circle cx="100" cy="100" r="6" fill="currentColor" class="text-navy dark:text-accent" />
+            </g>
+          </svg>
+        </div>
+
+        <!-- Valor numérico en vivo -->
+        <div class="min-h-[70px] flex flex-col justify-center items-center mb-2">
+          <template x-if="isRunning">
+            <div>
+              <div class="text-4xl font-extrabold text-navy dark:text-accent tracking-tight" x-text="formattedGaugeValue"></div>
+              <div class="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mt-0.5" x-text="gaugeUnit"></div>
+              <div x-show="phase === 'testingPing'" class="text-xs text-gray-500 dark:text-gray-400 mt-1" x-text="`Intento ${pingAttempt} de 5`"></div>
+            </div>
+          </template>
+        </div>
+
+        <!-- Mensaje de estado -->
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-6" x-text="statusText"></p>
+
+        <!-- Botón de acción -->
+        <div x-show="!isRunning" class="max-w-xs mx-auto">
+          <button @click="startTest()" type="button" class="btn-primary w-full justify-center text-base py-3 shadow-lg">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <span x-text="isFinishedOrFailed ? 'Repetir Prueba' : 'Iniciar Prueba'"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sección de Resultados -->
+      <div x-show="hasAnyResult" x-transition class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl shadow-lg p-6">
+        <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-4 text-left">Resultados</h2>
+        <div class="divide-y divide-gray-100 dark:divide-gray-800">
+          <div x-show="result.pingMs !== null" class="py-3 flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <svg class="w-4 h-4 text-navy dark:text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              Ping
+            </span>
+            <span class="text-base font-bold text-gray-900 dark:text-white" x-text="result.pingMs !== null ? `${Math.round(result.pingMs)} ms` : '-'"></span>
+          </div>
+          <div x-show="result.downloadMbps !== null" class="py-3 flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <svg class="w-4 h-4 text-navy dark:text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Descarga
+            </span>
+            <span class="text-base font-bold text-gray-900 dark:text-white" x-text="result.downloadMbps !== null ? `${result.downloadMbps.toFixed(1)} Mbps` : '-'"></span>
+          </div>
+          <div x-show="result.uploadMbps !== null" class="py-3 flex items-center justify-between">
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+              <svg class="w-4 h-4 text-navy dark:text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+              Subida
+            </span>
+            <span class="text-base font-bold text-gray-900 dark:text-white" x-text="result.uploadMbps !== null ? `${result.uploadMbps.toFixed(1)} Mbps` : '-'"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Legal footer -->
+  <footer class="legal-footer pb-24 md:pb-8 pt-6 px-4 text-center text-xs text-gray-500 dark:text-gray-600">
+    <div class="flex flex-wrap items-center justify-center gap-3">
+      <a href="index.html" class="footer-link">&larr; Volver a CubaCell Connect</a>
+      <span class="text-gray-300 dark:text-gray-700">·</span>
+      <a href="privacy.html" class="footer-link">Política de Privacidad</a>
+      <span class="text-gray-300 dark:text-gray-700">·</span>
+      <a href="terms.html" class="footer-link">Términos y Condiciones</a>
+      <span class="text-gray-300 dark:text-gray-700">·</span>
+      <a href="eula.html" class="footer-link">EULA</a>
+    </div>
+  </footer>
+
+  <!-- Modal — Instalar en iPhone -->
+  <div x-show="showInstallGuide" x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0" class="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center sm:p-4"
+    style="display:none">
+
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="dismissInstallGuide()"></div>
+
+    <div x-show="showInstallGuide" x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 translate-y-full sm:translate-y-2 scale-100 sm:scale-95"
+      x-transition:enter-end="opacity-100 translate-y-0 scale-100" x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+      x-transition:leave-end="opacity-0 translate-y-full sm:translate-y-2 scale-100 sm:scale-95"
+      class="relative w-full sm:max-w-md bg-white dark:bg-gray-900 rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden"
+      @keydown.escape.window="dismissInstallGuide()">
+
+      <div class="h-1 bg-gradient-to-r from-navy via-accent to-navy"></div>
+
+      <div class="sm:hidden flex justify-center pt-3 pb-1" aria-hidden="true">
+        <span class="w-10 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+      </div>
+
+      <button @click="dismissInstallGuide()"
+        class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-500 dark:text-gray-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <div class="p-8 pb-[max(2rem,env(safe-area-inset-bottom))] sm:pb-8">
+        <div class="inline-flex items-center gap-2 text-navy dark:text-accent text-xs font-semibold uppercase tracking-widest rounded-full px-3 py-1 mb-5">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+          Acceso directo en tu iPhone
+        </div>
+
+        <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Instala la app</h2>
+        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">Agrega esta página a tu pantalla de inicio y ábrela directo.</p>
+
+        <ol class="space-y-4 mb-2">
+          <li class="flex items-start gap-3">
+            <span class="w-7 h-7 flex-shrink-0 rounded-full bg-navy/15 dark:bg-accent/15 text-navy dark:text-accent font-bold text-sm flex items-center justify-center">1</span>
+            <p class="text-sm text-gray-700 dark:text-gray-300 pt-0.5">Toca el ícono de <strong>Compartir</strong> en Safari.</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="w-7 h-7 flex-shrink-0 rounded-full bg-navy/15 dark:bg-accent/15 text-navy dark:text-accent font-bold text-sm flex items-center justify-center">2</span>
+            <p class="text-sm text-gray-700 dark:text-gray-300 pt-0.5">Desliza y elige <strong>Agregar a inicio</strong>.</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="w-7 h-7 flex-shrink-0 rounded-full bg-navy/15 dark:bg-accent/15 text-navy dark:text-accent font-bold text-sm flex items-center justify-center">3</span>
+            <p class="text-sm text-gray-700 dark:text-gray-300 pt-0.5">Toca <strong>Agregar</strong> arriba a la derecha.</p>
+          </li>
+        </ol>
+
+        <div class="flex items-center gap-3 my-5">
+          <div class="flex-1 h-px bg-gray-200 dark:bg-white/10"></div>
+          <span class="text-xs text-gray-400 dark:text-gray-500">o</span>
+          <div class="flex-1 h-px bg-gray-200 dark:bg-white/10"></div>
+        </div>
+
+        <p class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Avísame cuando esté en la App Store</p>
+        <div x-data="notifyForm()">
+          <form @submit.prevent="submit()" class="flex flex-col gap-3">
+            <input x-model="email" type="email" required placeholder="tucorreo@ejemplo.com" :disabled="loading || sent"
+              class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/10 border border-gray-200 dark:border-white/15 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-navy dark:focus:ring-accent disabled:opacity-50 transition" />
+            <button type="submit" :disabled="loading || sent" class="btn-primary w-full disabled:opacity-60">
+              <span x-show="!loading && !sent" class="flex items-center gap-2">Notificarme</span>
+              <span x-show="loading" class="animate-pulse">Enviando...</span>
+              <span x-show="sent">¡Listo, te avisamos!</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <script src="app.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch((err) => console.warn('SW registration failed:', err));
+      });
+    }
+  </script>
+
+  <script>
+    function speedTestApp() {
+      return {
+        phase: 'idle', // 'idle' | 'testingPing' | 'testingDownload' | 'testingUpload' | 'finished' | 'failed'
+        gaugeValue: 0,
+        pingAttempt: 0,
+        errorMessage: '',
+        result: {
+          pingMs: null,
+          downloadMbps: null,
+          uploadMbps: null
+        },
+
+        isIOS: false,
+        isStandalone: false,
+        showInstallGuide: false,
+        headerCollapsed: false,
+        abortController: null,
+
+        init() {
+          this.isIOS = document.documentElement.classList.contains('ios');
+          this.isStandalone = document.documentElement.classList.contains('ios-standalone');
+          if (this.isStandalone) {
+            const saved = localStorage.getItem('dialHeaderCollapsed');
+            this.headerCollapsed = saved !== null ? saved === 'true' : true;
+          }
+          window.addEventListener('open-install-guide', () => { this.showInstallGuide = true; });
+        },
+
+        toggleHeader() {
+          this.headerCollapsed = !this.headerCollapsed;
+          localStorage.setItem('dialHeaderCollapsed', this.headerCollapsed);
+        },
+        dismissInstallGuide() {
+          this.showInstallGuide = false;
+        },
+
+        get isRunning() {
+          return ['testingPing', 'testingDownload', 'testingUpload'].includes(this.phase);
+        },
+
+        get isFinishedOrFailed() {
+          return this.phase === 'finished' || this.phase === 'failed';
+        },
+
+        get hasAnyResult() {
+          return this.result.pingMs !== null || this.result.downloadMbps !== null || this.result.uploadMbps !== null;
+        },
+
+        get gaugeMaxValue() {
+          return this.phase === 'testingPing' ? 300 : 150;
+        },
+
+        get gaugeUnit() {
+          if (this.phase === 'testingPing') return 'ms';
+          if (this.phase === 'testingDownload' || this.phase === 'testingUpload') return 'Mbps';
+          return '';
+        },
+
+        get formattedGaugeValue() {
+          if (this.phase === 'testingPing') {
+            return Math.round(this.gaugeValue).toString();
+          }
+          return this.gaugeValue.toFixed(1);
+        },
+
+        get needleDegrees() {
+          const max = this.gaugeMaxValue;
+          const val = Math.min(Math.max(this.gaugeValue, 0), max);
+          const fraction = val / max;
+          return -90 + fraction * 180;
+        },
+
+        get statusText() {
+          switch (this.phase) {
+            case 'idle': return 'Toca el botón para medir tu conexión.';
+            case 'testingPing': return 'Midiendo ping…';
+            case 'testingDownload': return 'Midiendo velocidad de descarga…';
+            case 'testingUpload': return 'Midiendo velocidad de subida…';
+            case 'finished': return 'Prueba completada.';
+            case 'failed': return this.errorMessage || 'Error al realizar la prueba.';
+          }
+        },
+
+        async startTest() {
+          this.phase = 'testingPing';
+          this.gaugeValue = 0;
+          this.pingAttempt = 0;
+          this.errorMessage = '';
+          this.result = { pingMs: null, downloadMbps: null, uploadMbps: null };
+          this.abortController = new AbortController();
+
+          try {
+            // 1. Measure Ping
+            const ping = await this.measurePing();
+            this.result.pingMs = ping;
+
+            // 2. Measure Download
+            this.phase = 'testingDownload';
+            this.gaugeValue = 0;
+            const download = await this.measureDownload();
+            this.result.downloadMbps = download;
+
+            // 3. Measure Upload
+            this.phase = 'testingUpload';
+            this.gaugeValue = 0;
+            const upload = await this.measureUpload();
+            this.result.uploadMbps = upload;
+
+            this.phase = 'finished';
+            this.gaugeValue = 0;
+          } catch (e) {
+            console.error('Speed test error:', e);
+            if (e.name === 'AbortError') return;
+            this.phase = 'failed';
+            this.errorMessage = 'No se pudo medir la velocidad. Revisa tu conexión a internet.';
+          }
+        },
+
+        async measurePing() {
+          const samples = [];
+          for (let i = 1; i <= 5; i++) {
+            this.pingAttempt = i;
+            const start = performance.now();
+            await fetch('https://speed.cloudflare.com/cdn-cgi/trace?' + Date.now() + Math.random(), {
+              cache: 'no-store',
+              signal: this.abortController.signal
+            });
+            const ms = performance.now() - start;
+            samples.push(ms);
+            this.gaugeValue = ms;
+            await new Promise(r => setTimeout(r, 100));
+          }
+          samples.sort((a, b) => a - b);
+          return samples[Math.floor(samples.length / 2)];
+        },
+
+        async measureDownload() {
+          const byteCount = 25_000_000;
+          const url = 'https://speed.cloudflare.com/__down?bytes=' + byteCount;
+          const start = performance.now();
+
+          const response = await fetch(url, { cache: 'no-store', signal: this.abortController.signal });
+          if (!response.body) {
+            await response.blob();
+            const elapsed = (performance.now() - start) / 1000;
+            return (byteCount * 8 / 1_000_000) / elapsed;
+          }
+
+          const reader = response.body.getReader();
+          let received = 0;
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            received += value.length;
+            const elapsed = (performance.now() - start) / 1000;
+            if (elapsed > 0.05) {
+              const mbps = (received * 8 / 1_000_000) / elapsed;
+              this.gaugeValue = mbps;
+            }
+          }
+
+          const elapsed = (performance.now() - start) / 1000;
+          return (byteCount * 8 / 1_000_000) / elapsed;
+        },
+
+        async measureUpload() {
+          const byteCount = 10_000_000;
+          const payload = new Uint8Array(byteCount);
+          const start = performance.now();
+
+          // Simulación visual progresiva durante el upload en navegadores
+          const updateInterval = setInterval(() => {
+            const elapsed = (performance.now() - start) / 1000;
+            if (elapsed > 0.05) {
+              // Estimación visual suave
+              const estimatedProgress = Math.min(elapsed / 2, 1);
+              const currentBytes = byteCount * estimatedProgress;
+              this.gaugeValue = (currentBytes * 8 / 1_000_000) / elapsed;
+            }
+          }, 100);
+
+          try {
+            await fetch('https://speed.cloudflare.com/__up', {
+              method: 'POST',
+              body: payload,
+              cache: 'no-store',
+              signal: this.abortController.signal
+            });
+          } finally {
+            clearInterval(updateInterval);
+          }
+
+          const elapsed = (performance.now() - start) / 1000;
+          return (byteCount * 8 / 1_000_000) / elapsed;
+        }
+      };
+    }
+  </script>
+
+</body>
+
+</html>
