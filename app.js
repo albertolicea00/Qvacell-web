@@ -31,10 +31,6 @@ function app() {
         a: 'No. La app solo abre el marcador del iPhone con el código USSD correcto preescrito (el <code class="code-inline">#</code> va correctamente codificado). Tú confirmas la llamada y ETECSA responde por la red telefónica. Es un lanzador de códigos, no un bot.'
       },
       {
-        q: '¿Qué pasa si un código deja de funcionar?',
-        a: 'Repórtalo como issue en <a href="https://github.com/albertolicea00/cubacell-connect/issues" target="_blank" rel="noopener" class="text-navy dark:text-accent underline">GitHub</a>. Los códigos se corrigen primero en <a href="https://github.com/albertolicea00/MyUSSDCodes-collection" target="_blank" rel="noopener" class="text-navy dark:text-accent underline">MyUSSDCodes-collection</a> — la fuente única de verdad compartida por todas mis apps — y una acción semanal automática avisa si este repo se desincroniza.'
-      },
-      {
         q: '¿Puedo contribuir al proyecto?',
         a: 'Sí. Mira <code class="code-inline">CONTRIBUTING.md</code> en el repositorio. Issues, PRs y commits deben estar en inglés, aunque la UI de la app está en español.'
       },

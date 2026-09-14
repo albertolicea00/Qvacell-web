@@ -48,8 +48,6 @@ On iOS Safari (detected via UA / `MacIntel` + multi-touch, not standalone yet), 
 https://raw.githubusercontent.com/albertolicea00/cubacell-connect/refs/heads/main/CubacellConnect/codes.json
 ```
 
-Codes are still fixed upstream in **[MyUSSDCodes-collection](https://github.com/albertolicea00/MyUSSDCodes-collection)** first (the source of truth shared across all of the author's USSD apps), then synced into this file — a weekly `ussd-sync-check` GitHub Action flags drift. Fetching the app repo's file directly (rather than MyUSSDCodes-collection) means this site never gets ahead of what the iOS app itself ships.
-
 The actual offline capability lives in `sw.js`, a service worker registered from both `index.html` and `dial.html`. It caches everything needed to render the app into Cache Storage (which has no expiry):
 
 - **Precached on install**: both pages, `style.css`, `app.js`, the icon SVGs, favicon, the remote catalog JSON, and the Tailwind/Alpine CDN scripts the pages depend on. Precached explicitly rather than left to first-use caching, because the page's own first fetch for the catalog fires from Alpine's `init()` *before* the service worker finishes registering (registration only starts on the `load` event) — without precaching it, a brand-new install that goes offline before a second visit would show a working shell with no codes.
@@ -88,8 +86,6 @@ Accents (section badges, primary buttons, the step-number circles, the hero's "d
 Other USSD-code apps by the same author:
 
 - [Banca Remota](https://bancaremota.vercel.app/) — landing page + web dialer for the Banca Remota the Unofficial iOS alternative to Cuba’s mobile Banking apps.
-- [MyUSSDCodes iOS](https://github.com/albertolicea00/MyUSSDCodes-ios) — general-purpose iOS app (Swift/SwiftUI) to browse, organize and run USSD codes across any carrier/collection.
-- [MyUSSDCodes Android](https://github.com/albertolicea00/MyUSSDCodes-apk) — the same, for Android (Kotlin/Jetpack Compose).
 
 
 ## Contributing
