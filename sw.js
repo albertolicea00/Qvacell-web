@@ -16,7 +16,7 @@ const CACHE_NAME = 'cubacell-connect-v1';
 // (registration only starts on the 'load' event, which fires later), so it's
 // otherwise never controlled/cached and a subsequent fully-offline open has
 // no data to show. Precaching it here closes that race.
-const CODES_URL = 'https://raw.githubusercontent.com/albertolicea00/CubaCellConnect/refs/heads/main/CubaCellConnect/codes.json';
+const CODES_URL = 'https://raw.githubusercontent.com/albertolicea00/CubaCellConnect/main/CubaCellConnect/codes.json';
 
 const PRECACHE_URLS = [
   '/',
