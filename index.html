@@ -363,16 +363,6 @@
             <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Programa alertas recurrentes para compras de planes, recargas o transferencias con acción de marcado a un toque.</p>
           </div>
 
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm hover:shadow-md transition-all">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-xl bg-accent/10 dark:bg-accent/20 text-accent flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-gray-900 dark:text-white">Siri y Atajos de Voz</h3>
-            </div>
-            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Consulta tu saldo o realiza llamadas privadas/revertidas mediante comandos de voz con <code class="code-inline">AppIntents</code>.</p>
-          </div>
-
         </div>
 
       </div>
@@ -557,6 +547,20 @@
         </div>
 
         <div class="space-y-4">
+          
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm">
+            <div class="flex items-start gap-4">
+              <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-base">Sin integración con Siri / Atajos de voz</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">
+                  Implementado previamente mediante <code class="code-inline">AppIntents</code> y removido intencionalmente. Cada intencion debía traer la app al primer plano y requerir la misma confirmación de marcado <code class="code-inline">tel://</code> que al tocar el código en la interfaz, por lo que un comando de voz no ahorraba pasos reales frente a desbloquear e interactuar directamente.
+                </p>
+              </div>
+            </div>
+          </div>
           
           <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm">
             <div class="flex items-start gap-4">
