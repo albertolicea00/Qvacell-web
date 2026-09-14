@@ -82,9 +82,8 @@
 
       <div class="hidden md:flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
         <a href="#features" class="nav-link">Funciones</a>
-        <a href="#catalog" class="nav-link">Catálogo de códigos</a>
         <a href="/dial.html" class="nav-link">Marcador USSD</a>
-        <a href="#faq" class="nav-link">FAQ</a>
+        <a href="/speed.html" class="nav-link">Test de velocidad</a>
         <a href="#limitations" class="nav-link">Limitaciones</a>
       </div>
 
@@ -133,12 +132,10 @@
       <div class="px-4 pt-2 pb-6 space-y-1 shadow-lg">
         <a href="#features" @click="mobileMenuOpen = false"
           class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Funciones</a>
-        <a href="#catalog" @click="mobileMenuOpen = false"
-          class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Catálogo de códigos</a>
         <a href="/dial.html" @click="mobileMenuOpen = false"
           class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Marcador USSD</a>
-        <a href="#faq" @click="mobileMenuOpen = false"
-          class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">FAQ</a>
+        <a href="/speed.html" @click="mobileMenuOpen = false"
+          class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Test de velocidad</a>
         <a href="#limitations" @click="mobileMenuOpen = false"
           class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Limitaciones</a>
         <div class="pt-2 pb-1">
@@ -391,32 +388,6 @@
         <div class="absolute bottom-0 right-0 w-72 h-72 rounded-full bg-navy opacity-[0.06] dark:opacity-[0.06] blur-[110px]"></div>
       </div>
       <div class="max-w-5xl mx-auto">
-        <!-- USSD codes warning marquee -->
-        <div class="overflow-hidden mb-12 border-y border-navy/30 dark:border-accent/30 bg-navy/5 dark:bg-accent/10 py-3" style="width:100vw;margin-left:calc(50% - 50vw)">
-          <div class="marquee-track flex gap-12 whitespace-nowrap text-sm font-medium text-navy dark:text-accent">
-            <span class="marquee-content">
-              <svg class="inline w-3.5 h-3.5 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/></svg> Los códigos USSD los gestiona ETECSA y suelen ser bastante estables en el tiempo
-              &nbsp;·&nbsp;
-              <svg class="inline w-3.5 h-3.5 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg> El catálogo vive en <code>ussd_codes.json</code>, dentro del propio repo de la app
-              &nbsp;·&nbsp;
-              <svg class="inline w-3.5 h-3.5 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg> Descarga la última versión del catálogo desde GitHub &nbsp;·&nbsp;
-              <svg class="inline w-3.5 h-3.5 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg> ¿Encontraste un código nuevo o desactualizado? Abre un PR y ayuda a la comunidad
-              &nbsp;·&nbsp;
-            </span>
-            <span class="marquee-content" aria-hidden="true">
-              <svg class="inline w-3.5 h-3.5 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/></svg> Los códigos USSD los gestiona ETECSA y suelen ser bastante estables en el tiempo
-              &nbsp;·&nbsp;
-              <svg class="inline w-3.5 h-3.5 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg> El catálogo vive en <code>ussd_codes.json</code>, dentro del propio repo de la app
-              &nbsp;·&nbsp;
-              <svg class="inline w-3.5 h-3.5 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg> Si un código deja de funcionar, se corrige ahí primero y se sincroniza a esta app
-              &nbsp;·&nbsp;
-              <svg class="inline w-3.5 h-3.5 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg> Descarga la última versión del catálogo desde GitHub &nbsp;·&nbsp;
-              <svg class="inline w-3.5 h-3.5 align-middle" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg> ¿Encontraste un código nuevo o desactualizado? Abre un PR y ayuda a la comunidad
-              &nbsp;·&nbsp;
-            </span>
-          </div>
-        </div>
-
         <div class="text-center mb-6 scroll-mt-24">
           <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Catálogo de códigos</h3>
           <p class="text-gray-500 dark:text-gray-400 mt-2">El archivo fuente que alimenta la app, listo para descargar.</p>
@@ -442,6 +413,27 @@
             </svg>
             Descargar catálogo
           </a>
+        </div>
+
+        <!-- Mnemonic Tip Box -->
+        <div class="bg-navy/5 dark:bg-accent/10 rounded-2xl p-6 border border-navy/20 dark:border-accent/30 mt-8">
+          <div class="flex items-start gap-4">
+            <div class="p-2.5 rounded-xl bg-navy/10 dark:bg-accent/20 text-navy dark:text-accent shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m1.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+              <h4 class="font-bold text-base text-gray-900 dark:text-white">💡 Dato curioso nemotécnico</h4>
+              <p>
+                Para consultar cuánto te queda de algún servicio extra que hayas adquirido, fíjate en las letras que salen junto a los números en el teclado de tu celular. Esos mismos caracteres que años atrás, antes de las pantallas táctiles, se usaban para escribir los mensajes.
+              </p>
+              <p>
+                Descubrirás que con cada número del código puedes escribir las primeras tres letras del servicio que vas a consultar. Por ejemplo, con <strong class="text-navy dark:text-accent font-semibold">328</strong> puedes escribir <em>“dat”</em> (de datos móviles), por eso el USSD es <code class="code-inline">*222*328#</code>.
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 pt-1 border-t border-navy/10 dark:border-accent/20">
+                Lo mismo sirve para el <strong class="text-navy dark:text-accent font-semibold">266</strong> (<em>“bon”</em> del bono), el <strong class="text-navy dark:text-accent font-semibold">869</strong> (<em>“voz”</em>), el <strong class="text-navy dark:text-accent font-semibold">767</strong> (<em>“sms”</em>), el <strong class="text-navy dark:text-accent font-semibold">264</strong> (<em>“amg”</em> por Plan Amigos) o el <strong class="text-navy dark:text-accent font-semibold">468</strong> (<em>“int”</em> de Internet).
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -804,6 +796,7 @@
           <h4 class="text-gray-900 dark:text-white font-semibold mb-4 text-sm">Proyecto</h4>
           <ul class="space-y-2 text-sm">
             <li><a href="/dial.html" class="footer-link">Marcador USSD</a></li>
+            <li><a href="/speed.html" class="footer-link">Test de velocidad</a></li>
             <li><a href="https://github.com/albertolicea00/CubaCellConnect/issues"
               target="_blank" rel="noopener" class="footer-link">Reportar bug</a>
             </li>
