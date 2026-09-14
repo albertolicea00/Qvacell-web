@@ -229,12 +229,18 @@
       </div>
 
       <!-- Card stack interactive carousel — always visible (desktop and mobile) -->
-      <!-- PLACEHOLDER MOCKUPS: assets/mockups/*.svg are gray placeholder frames,
-           not real app screenshots. Replace with real light/dark screenshots
-           of HomeView and CodeDetailView before launch. -->
       <div class="flex justify-center mt-4 pb-2" x-data="cardStack([
-             {id:'home',   light:'assets/mockups/home-view-light.svg',   dark:'assets/mockups/home-view-dark.svg'},
-             {id:'detail', light:'assets/mockups/detail-view-light.svg', dark:'assets/mockups/detail-view-dark.svg'},
+             {id:'home',            light:'assets/mockups/home-light.webp',            dark:'assets/mockups/home-dark.webp'},
+             {id:'contacts',        light:'assets/mockups/contacts-light.webp',        dark:'assets/mockups/contacts-dark.webp'},
+             {id:'contacts-action', light:'assets/mockups/contacts-action-light.webp', dark:'assets/mockups/contacts-action-dark.webp'},
+             {id:'directory',       light:'assets/mockups/directory-light.webp',       dark:'assets/mockups/directory-dark.webp'},
+             {id:'shop',            light:'assets/mockups/shop-light.webp',            dark:'assets/mockups/shop-dark.webp'},
+             {id:'wifi-zones',      light:'assets/mockups/wifi-zones-light.webp',      dark:'assets/mockups/wifi-zones-dark.webp'},
+             {id:'sms-services',    light:'assets/mockups/sms-services-light.webp',    dark:'assets/mockups/sms-services-dark.webp'},
+             {id:'help-lines',      light:'assets/mockups/help-lines-light.webp',      dark:'assets/mockups/help-lines-dark.webp'},
+             {id:'settings',        light:'assets/mockups/settings-light.webp',        dark:'assets/mockups/settings-dark.webp'},
+             {id:'reminders',       light:'assets/mockups/reminders-light.webp',       dark:'assets/mockups/reminders-dark.webp'},
+             {id:'speed-test',      light:'assets/mockups/speed-test-light.webp',      dark:'assets/mockups/speed-test-dark.webp'},
            ])">
         <div class="relative select-none w-56 h-[27rem] sm:w-64 sm:h-[30rem]" style="touch-action:none;"
           @pointerdown="startDrag($event)" @pointermove.window="drag($event)" @pointerup.window="endDrag()"
