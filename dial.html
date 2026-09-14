@@ -538,9 +538,37 @@
         copiedId: null,
 
         applyCodes(catalog) {
-          this.categories = catalog.categories || [];
-          const allCodes = [];
+          const rawCategories = JSON.parse(JSON.stringify(catalog.categories || []));
           
+          rawCategories.forEach(cat => {
+            const newGroups = [];
+            (cat.groups || []).forEach(group => {
+              if (group.name === 'Configuraciones') {
+                const smsCodes = (group.codes || []).filter(c => c.type === 'sms');
+                const otherCodes = (group.codes || []).filter(c => c.type !== 'sms');
+                
+                if (otherCodes.length > 0) {
+                  newGroups.push({
+                    name: 'Configuraciones',
+                    codes: otherCodes
+                  });
+                }
+                if (smsCodes.length > 0) {
+                  newGroups.push({
+                    name: 'Configuración por SMS',
+                    codes: smsCodes
+                  });
+                }
+              } else {
+                newGroups.push(group);
+              }
+            });
+            cat.groups = newGroups;
+          });
+
+          this.categories = rawCategories;
+
+          const allCodes = [];
           this.categories.forEach(cat => {
             (cat.groups || []).forEach(group => {
               (group.codes || []).forEach(code => {
