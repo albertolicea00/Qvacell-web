@@ -21,6 +21,7 @@ const CODES_URL = 'https://raw.githubusercontent.com/albertolicea00/CubaCellConn
 const PRECACHE_URLS = [
   '/',
   '/dial',
+  '/speed',
   '/style.css',
   '/app.js',
   '/assets/favicon.svg',
