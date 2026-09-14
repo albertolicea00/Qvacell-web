@@ -163,7 +163,7 @@
       <div class="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-accent opacity-[0.10] dark:opacity-[0.06] blur-3xl"></div>
     </div>
 
-    <div class="max-w-2xl mx-auto relative">
+    <div class="max-w-6xl mx-auto relative">
 
       <div x-show="!headerCollapsed" x-transition.opacity.duration.150ms class="text-center mb-10">
         <span class="section-badge">Marcador USSD</span>
@@ -190,22 +190,25 @@
       </div>
 
       <!-- ════════════════════════════════════════
-           SINGLE CARRIER (ETECSA) — one searchable list grouped by category
+           DESKTOP/TABLET: Multi-column cards side-by-side · MOBILE: 1 column driven by bottom tabs
       ════════════════════════════════════════ -->
-      <div class="space-y-10">
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6 items-start">
         <template x-for="cat in categories" :key="cat.id">
-          <div x-show="categoryVisible(cat)" :class="activeCategory === cat.id ? 'block' : 'hidden md:block'">
-            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-4 pb-2 border-b border-gray-200/60 dark:border-gray-800">
-              <svg class="w-4 h-4 text-navy dark:text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" :d="categoryIconPath(cat.icon)" />
-              </svg>
-              <span x-text="cat.name"></span>
+          <section x-show="categoryVisible(cat)" :class="activeCategory === cat.id ? 'block' : 'hidden md:block'"
+            class="bg-white dark:bg-gray-900 rounded-3xl p-5 border border-gray-100 dark:border-gray-800/80 shadow-sm transition-all duration-200">
+            <div class="flex items-center gap-2.5 text-xs font-bold uppercase tracking-widest text-navy dark:text-accent mb-5 pb-3 border-b border-gray-100 dark:border-gray-800">
+              <div class="w-8 h-8 rounded-xl bg-navy/10 dark:bg-accent/20 flex items-center justify-center text-navy dark:text-accent flex-shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" :d="categoryIconPath(cat.icon)" />
+                </svg>
+              </div>
+              <span class="text-sm font-extrabold text-gray-900 dark:text-white" x-text="cat.name"></span>
             </div>
             
             <div class="space-y-6">
               <template x-for="(group, gIdx) in groupsFor(cat)" :key="group.name + gIdx">
                 <div>
-                  <h3 class="text-[0.68rem] font-extrabold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2 pl-0.5" x-text="group.name"></h3>
+                  <h3 class="text-[0.68rem] font-extrabold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2.5 pl-0.5" x-text="group.name"></h3>
                   <div class="space-y-2">
                     <template x-for="code in codesForGroup(group)" :key="code.id">
                       <button type="button" @click="code.requiresInput ? openInput(code) : dial(code)"
@@ -247,8 +250,9 @@
                 </div>
               </template>
             </div>
-          </div>
+          </section>
         </template>
+      </div>
 
         <div x-show="query.trim() && !categories.some(cat => categoryVisible(cat.id))" class="py-6 text-center">
           <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">
