@@ -12,7 +12,7 @@ function app() {
       },
       {
         q: '¿Es segura la app?',
-        a: 'Sí. No hay red, servidores ni cuentas — el catálogo completo de códigos viaja embebido en la propia app. No se recopila ningún dato. El código es open source: puedes revisarlo tú mismo en <a href="https://github.com/albertolicea00/cubacell-connect" target="_blank" rel="noopener" class="text-navy dark:text-accent underline">GitHub</a>.'
+        a: 'Sí. No hay red, servidores ni cuentas — el catálogo completo de códigos viaja embebido en la propia app. No se recopila ningún dato. El código es open source: puedes revisarlo tú mismo en <a href="https://github.com/albertolicea00/CubaCellConnect" target="_blank" rel="noopener" class="text-navy dark:text-accent underline">GitHub</a>.'
       },
       {
         q: '¿Cuándo estará en la App Store?',

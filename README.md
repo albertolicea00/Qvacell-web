@@ -1,12 +1,12 @@
 # 🇨🇺 CubaCell Connect — Landing Page
 
-[![GitHub Stars](https://img.shields.io/github/stars/albertolicea00/cubacell-connect?style=flat&logo=github&label=stars&color=000066)](https://github.com/albertolicea00/cubacell-connect)
+[![GitHub Stars](https://img.shields.io/github/stars/albertolicea00/cubacell-connect?style=flat&logo=github&label=stars&color=000066)](https://github.com/albertolicea00/CubaCellConnect)
 ![HTML](https://img.shields.io/badge/HTML-E34F26?style=flat&logo=html5&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat&logo=alpinedotjs&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)
 
-Landing page + web USSD dialer for the [CubaCell Connect](https://github.com/albertolicea00/cubacell-connect) iOS app. No build step.
+Landing page + web USSD dialer for the [CubaCell Connect](https://github.com/albertolicea00/CubaCellConnect) iOS app. No build step.
 
 ## Structure
 
@@ -50,7 +50,7 @@ https://raw.githubusercontent.com/albertolicea00/cubacell-connect/refs/heads/mai
 
 The actual offline capability lives in `sw.js`, a service worker registered from both `index.html` and `dial.html`. It caches everything needed to render the app into Cache Storage (which has no expiry):
 
-- **Precached on install**: both pages, `style.css`, `app.js`, the icon SVGs, favicon, the remote catalog JSON, and the Tailwind/Alpine CDN scripts the pages depend on. Precached explicitly rather than left to first-use caching, because the page's own first fetch for the catalog fires from Alpine's `init()` *before* the service worker finishes registering (registration only starts on the `load` event) — without precaching it, a brand-new install that goes offline before a second visit would show a working shell with no codes.
+- **Precached on install**: both pages, `style.css`, `app.js`, the icon SVGs, favicon, the remote catalog JSON, and the Tailwind/Alpine CDN scripts the pages depend on. Precached explicitly rather than left to first-use caching, because the page's own first fetch for the catalog fires from Alpine's `init()` _before_ the service worker finishes registering (registration only starts on the `load` event) — without precaching it, a brand-new install that goes offline before a second visit would show a working shell with no codes.
 - **Runtime (stale-while-revalidate)**: anything else requested later is served from cache instantly if present, with a background refetch to keep it current for next time.
 
 Net effect: after one successful online visit, the dialer (and the landing page) keep working with zero connection indefinitely, while still picking up USSD code fixes pushed to the app repo whenever a connection is available, without shipping a new deploy of this site.
@@ -71,15 +71,14 @@ Push to `main` → Vercel auto-deploys. Add env vars from `.env.example` in the 
 
 ## Colors
 
-| Token | Hex | |
-|---|---|---|
-| `--color-navy` | `#000066` | Primary brand accent |
-| `--color-accent` | `#0099cc` | Cyan highlights |
+| Token            | Hex       |                      |
+| ---------------- | --------- | -------------------- |
+| `--color-navy`   | `#000066` | Primary brand accent |
+| `--color-accent` | `#0099cc` | Cyan highlights      |
 
 Matches the iOS app's brand palette (`CLAUDE.md`: navy `rgb(0, 0, 102)`, cyan `#09C`).
 
 Accents (section badges, primary buttons, the step-number circles, the hero's "desde tu iPhone") don't swap solid colors between light/dark — they all share a `gradientTravel` keyframe animation (`style.css`) that continuously shifts a navy→accent→navy gradient, same in both themes. Reuse it via the `.gradient-text` (text, `background-clip: text`) or `.gradient-bg` (backgrounds) utility classes rather than hardcoding another `linear-gradient(...); animation: gradientTravel ...` block.
-
 
 ## More Apps
 
@@ -87,11 +86,10 @@ Other USSD-code apps by the same author:
 
 - [Banca Remota](https://bancaremota.vercel.app/) — landing page + web dialer for the Banca Remota the Unofficial iOS alternative to Cuba’s mobile Banking apps.
 
-
 ## Contributing
 
-See the main project's [CONTRIBUTING.md](https://github.com/albertolicea00/cubacell-connect/blob/main/CONTRIBUTING.md). Issues, PRs, and commit messages must be in English.
+See the main project's [CONTRIBUTING.md](https://github.com/albertolicea00/CubaCellConnect/blob/main/CONTRIBUTING.md). Issues, PRs, and commit messages must be in English.
 
 ---
 
-*Part of the [CubaCell Connect](https://github.com/albertolicea00/cubacell-connect) project by [Alberto Licea](https://www.linkedin.com/in/albertolicea00).*
+_Part of the [CubaCell Connect](https://github.com/albertolicea00/CubaCellConnect) project by [Alberto Licea](https://www.linkedin.com/in/albertolicea00)._
