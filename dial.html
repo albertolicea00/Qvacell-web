@@ -163,9 +163,9 @@
       <div class="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-accent opacity-[0.10] dark:opacity-[0.06] blur-3xl"></div>
     </div>
 
-    <div class="max-w-6xl mx-auto relative">
+    <div class="w-full relative">
 
-      <div x-show="!headerCollapsed" x-transition.opacity.duration.150ms class="text-center mb-10">
+      <div x-show="!headerCollapsed" x-transition.opacity.duration.150ms class="text-center mb-10 max-w-2xl mx-auto">
         <span class="section-badge">Marcador USSD</span>
         <h1 class="section-title">Llama directo por USSD</h1>
         <p class="section-subtitle">Busca la operación y toca la tarjeta para llamar.</p>
@@ -190,9 +190,9 @@
       </div>
 
       <!-- ════════════════════════════════════════
-           DESKTOP/TABLET: Multi-column cards side-by-side · MOBILE: 1 column driven by bottom tabs
+           DESKTOP/TABLET: Multi-column cards side-by-side (FULL WIDTH) · MOBILE: 1 column driven by bottom tabs
       ════════════════════════════════════════ -->
-      <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6 items-start">
+      <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
         <template x-for="cat in categories" :key="cat.id">
           <section x-show="categoryVisible(cat)" :class="activeCategory === cat.id ? 'block' : 'hidden md:block'"
             class="bg-white dark:bg-gray-900 rounded-3xl p-5 border border-gray-100 dark:border-gray-800/80 shadow-sm transition-all duration-200">
