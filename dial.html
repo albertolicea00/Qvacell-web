@@ -192,51 +192,59 @@
       <!-- ════════════════════════════════════════
            SINGLE CARRIER (ETECSA) — one searchable list grouped by category
       ════════════════════════════════════════ -->
-      <div class="space-y-8">
+      <div class="space-y-10">
         <template x-for="cat in categories" :key="cat.id">
-          <div x-show="categoryVisible(cat.id)" :class="activeCategory === cat.id ? 'block' : 'hidden md:block'">
-            <p class="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-2.5">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75">
+          <div x-show="categoryVisible(cat)" :class="activeCategory === cat.id ? 'block' : 'hidden md:block'">
+            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-4 pb-2 border-b border-gray-200/60 dark:border-gray-800">
+              <svg class="w-4 h-4 text-navy dark:text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" :d="categoryIconPath(cat.icon)" />
               </svg>
               <span x-text="cat.name"></span>
-            </p>
-            <div class="space-y-2">
-              <template x-for="code in codesFor(cat.id)" :key="code.id">
-                <button type="button" @click="code.requiresInput ? openInput(code) : dial(code)"
-                  class="code-card" :title="code.type === 'sms' ? 'Enviar SMS' : 'Llamar'">
-                  <span class="min-w-0 text-left">
-                    <span class="code-card-title block truncate" x-text="code.title"></span>
-                    <span class="code-card-desc block" x-text="code.details"></span>
-                    <span class="code-card-code block">
-                      <span x-text="code.code"></span>
-                      <span x-show="code.smsBody" class="text-xs text-navy dark:text-accent opacity-90 ml-1 font-semibold" x-text="'(SMS: ' + code.smsBody + ')'"></span>
-                    </span>
-                    <span x-show="code.price" class="text-xs font-semibold text-accent dark:text-cyan-400 block mt-0.5" x-text="code.price"></span>
-                  </span>
-                  <span class="flex items-center gap-1 flex-shrink-0">
-                    <span class="code-card-copy" @click.stop="copyCode(code)" role="button" tabindex="0"
-                      :aria-label="copiedId === code.id ? 'Copiado' : 'Copiar código'">
-                      <svg x-show="copiedId !== code.id" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V5a2 2 0 012-2h9a2 2 0 012 2v9a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2v-2M8 7h8v8" />
-                      </svg>
-                      <svg x-show="copiedId === code.id" class="w-4 h-4 text-accent" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </span>
-                    <span class="code-card-icon">
-                      <svg x-show="code.type === 'call'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h1.5a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                      </svg>
-                      <svg x-show="code.type === 'sms'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.625m3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12.375m3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h.008M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                      </svg>
-                      <svg x-show="code.type !== 'call' && code.type !== 'sms'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 9h1.5m0 0H15m-4.5 0v6m0 0H15M4.5 9h1.5m10.5 6h1.5M6.75 4.5h10.5A2.25 2.25 0 0119.5 6.75v10.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 17.25V6.75A2.25 2.25 0 016.75 4.5z" />
-                      </svg>
-                    </span>
-                  </span>
-                </button>
+            </div>
+            
+            <div class="space-y-6">
+              <template x-for="(group, gIdx) in groupsFor(cat)" :key="group.name + gIdx">
+                <div>
+                  <h3 class="text-[0.68rem] font-extrabold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2 pl-0.5" x-text="group.name"></h3>
+                  <div class="space-y-2">
+                    <template x-for="code in codesForGroup(group)" :key="code.id">
+                      <button type="button" @click="code.requiresInput ? openInput(code) : dial(code)"
+                        class="code-card" :title="code.type === 'sms' ? 'Enviar SMS' : 'Llamar'">
+                        <span class="min-w-0 text-left">
+                          <span class="code-card-title block truncate" x-text="code.title"></span>
+                          <span class="code-card-desc block" x-text="code.details"></span>
+                          <span class="code-card-code block">
+                            <span x-text="code.code"></span>
+                            <span x-show="code.smsBody" class="text-xs text-navy dark:text-accent opacity-90 ml-1 font-semibold" x-text="'(SMS: ' + code.smsBody + ')'"></span>
+                          </span>
+                          <span x-show="code.price" class="text-xs font-semibold text-accent dark:text-cyan-400 block mt-0.5" x-text="code.price"></span>
+                        </span>
+                        <span class="flex items-center gap-1 flex-shrink-0">
+                          <span class="code-card-copy" @click.stop="copyCode(code)" role="button" tabindex="0"
+                            :aria-label="copiedId === code.id ? 'Copiado' : 'Copiar código'">
+                            <svg x-show="copiedId !== code.id" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V5a2 2 0 012-2h9a2 2 0 012 2v9a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2v-2M8 7h8v8" />
+                            </svg>
+                            <svg x-show="copiedId === code.id" class="w-4 h-4 text-accent" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          </span>
+                          <span class="code-card-icon">
+                            <svg x-show="code.type === 'call'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h1.5a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                            </svg>
+                            <svg x-show="code.type === 'sms'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.625m3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12.375m3.75 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h.008M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <svg x-show="code.type !== 'call' && code.type !== 'sms'" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9 9h1.5m0 0H15m-4.5 0v6m0 0H15M4.5 9h1.5m10.5 6h1.5M6.75 4.5h10.5A2.25 2.25 0 0119.5 6.75v10.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 17.25V6.75A2.25 2.25 0 016.75 4.5z" />
+                            </svg>
+                          </span>
+                        </span>
+                      </button>
+                    </template>
+                  </div>
+                </div>
               </template>
             </div>
           </div>
@@ -600,11 +608,17 @@
           return CATEGORY_ICON_PATHS[iconName] || CATEGORY_ICON_PATHS['gauge'];
         },
 
-        codesFor(categoryId) {
-          return this.codes.filter(c => c.categoryId === categoryId && this.matchesQuery(c));
+        groupsFor(category) {
+          return (category.groups || []).filter(g => this.groupVisible(g));
         },
-        categoryVisible(categoryId) {
-          return this.codes.some(c => c.categoryId === categoryId && this.matchesQuery(c));
+        groupVisible(group) {
+          return (group.codes || []).some(c => this.matchesQuery(c));
+        },
+        codesForGroup(group) {
+          return (group.codes || []).filter(c => this.matchesQuery(c));
+        },
+        categoryVisible(cat) {
+          return (cat.groups || []).some(g => this.groupVisible(g));
         },
 
         normalize(s) {
