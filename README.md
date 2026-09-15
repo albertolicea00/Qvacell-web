@@ -42,7 +42,7 @@ On iOS Safari (detected via UA / `MacIntel` + multi-touch, not standalone yet), 
 
 ## Offline support
 
-`dial.html` does not ship its own copy of the catalog — it always pulls the latest `ussd_codes.json` straight from the iOS app's repo, the exact file the app bundles:
+`dial.html` does not ship its own copy of the catalog — it always pulls the latest `codes.json` straight from the main [CubaCellConnect repository](https://github.com/albertolicea00/cubacell-connect) (the exact file bundled by the iOS app):
 
 ```
 https://raw.githubusercontent.com/albertolicea00/cubacell-connect/refs/heads/main/CubacellConnect/codes.json
