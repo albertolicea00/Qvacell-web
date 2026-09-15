@@ -39,6 +39,34 @@ html { scroll-behavior: smooth; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 
+/* Top horizontal scrollbar container */
+.top-scrollbar {
+  transform: rotateX(180deg);
+}
+.top-scrollbar > * {
+  transform: rotateX(180deg);
+}
+.top-scrollbar.md\:flex {
+  align-items: flex-end !important;
+}
+.top-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+.top-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.04);
+  border-radius: 4px;
+}
+.dark .top-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+}
+.top-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-navy);
+  border-radius: 4px;
+}
+.dark .top-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+}
+
 /* Global scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
