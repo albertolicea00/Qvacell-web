@@ -190,11 +190,11 @@
       </div>
 
       <!-- ════════════════════════════════════════
-           DESKTOP/TABLET: Multi-column cards side-by-side (scroll horizontal con barra arriba si no caben) · MOBILE: 1 column driven by bottom tabs
+           DESKTOP/TABLET: Multi-column cards side-by-side (Horizontal scroll with a top bar if the content doesn’t fit) · MOBILE: 1 column driven by bottom tabs
       ════════════════════════════════════════ -->
       <div class="w-full overflow-x-auto top-scrollbar pt-4 pb-6 md:flex md:flex-row md:gap-6 md:items-start lg:grid lg:grid-cols-4">
         <template x-for="cat in categories" :key="cat.id">
-          <section x-show="categoryVisibleInView(cat)"
+          <section x-show="categoryVisible(cat)" :class="activeCategory === cat.id ? 'block' : 'hidden md:block'"
             class="w-full md:w-80 md:flex-shrink-0 lg:w-auto bg-white dark:bg-gray-900 rounded-3xl p-5 border border-gray-100 dark:border-gray-800/80 shadow-sm transition-all duration-200">
             <div class="flex items-center gap-2.5 text-xs font-bold uppercase tracking-widest text-navy dark:text-accent mb-5 pb-3 border-b border-gray-100 dark:border-gray-800">
               <div class="w-8 h-8 rounded-xl bg-navy/10 dark:bg-accent/20 flex items-center justify-center text-navy dark:text-accent flex-shrink-0">
@@ -651,14 +651,6 @@
         },
         categoryVisible(cat) {
           return (cat.groups || []).some(g => this.groupVisible(g));
-        },
-        categoryVisibleInView(cat) {
-          if (!this.categoryVisible(cat)) return false;
-          // En móviles (< 768px), solo la categoría activa se muestra y la barra inferior controla la seleccion
-          if (window.innerWidth < 768) {
-            return this.activeCategory === cat.id;
-          }
-          return true;
         },
 
         normalize(s) {
