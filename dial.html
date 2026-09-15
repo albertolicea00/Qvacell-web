@@ -190,12 +190,12 @@
       </div>
 
       <!-- ════════════════════════════════════════
-           DESKTOP/TABLET: Multi-column cards side-by-side (FULL WIDTH) · MOBILE: 1 column driven by bottom tabs
+           DESKTOP/TABLET: Multi-column cards side-by-side (scroll horizontal si no caben las 4) · MOBILE: 1 column driven by bottom tabs
       ════════════════════════════════════════ -->
-      <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+      <div class="w-full overflow-x-auto pb-6 scrollbar-hide md:flex md:flex-row md:gap-6 md:items-start lg:grid lg:grid-cols-4">
         <template x-for="cat in categories" :key="cat.id">
-          <section x-show="categoryVisible(cat)" :class="activeCategory === cat.id ? 'block' : 'hidden md:block'"
-            class="bg-white dark:bg-gray-900 rounded-3xl p-5 border border-gray-100 dark:border-gray-800/80 shadow-sm transition-all duration-200">
+          <section x-show="categoryVisibleInView(cat)"
+            class="w-full md:w-80 md:flex-shrink-0 lg:w-auto bg-white dark:bg-gray-900 rounded-3xl p-5 border border-gray-100 dark:border-gray-800/80 shadow-sm transition-all duration-200">
             <div class="flex items-center gap-2.5 text-xs font-bold uppercase tracking-widest text-navy dark:text-accent mb-5 pb-3 border-b border-gray-100 dark:border-gray-800">
               <div class="w-8 h-8 rounded-xl bg-navy/10 dark:bg-accent/20 flex items-center justify-center text-navy dark:text-accent flex-shrink-0">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -651,6 +651,14 @@
         },
         categoryVisible(cat) {
           return (cat.groups || []).some(g => this.groupVisible(g));
+        },
+        categoryVisibleInView(cat) {
+          if (!this.categoryVisible(cat)) return false;
+          // En móviles (< 768px), solo la categoría activa se muestra y la barra inferior controla la seleccion
+          if (window.innerWidth < 768) {
+            return this.activeCategory === cat.id;
+          }
+          return true;
         },
 
         normalize(s) {
