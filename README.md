@@ -8,6 +8,8 @@
 
 Landing page + web USSD dialer for the [CubaCell Connect](https://github.com/albertolicea00/CubaCellConnect) iOS app. No build step.
 
+[Mira la versión en español](README.es.md)
+
 ## Structure
 
 ```
