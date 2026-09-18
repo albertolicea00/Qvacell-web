@@ -34,3 +34,8 @@ out/
 *.tmp
 *.bak
 .env
+
+# Data files
+*.db
+*.sqlite
+*.sqlite3
