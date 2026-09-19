@@ -1,12 +1,12 @@
-# 🇨🇺 CubaCell Connect — Landing Page
+# 🇨🇺 Qvacell — Landing Page
 
-[![GitHub Stars](https://img.shields.io/github/stars/albertolicea00/cubacell-connect?style=flat&logo=github&label=stars&color=000066)](https://github.com/albertolicea00/CubaCellConnect)
+[![GitHub Stars](https://img.shields.io/github/stars/albertolicea00/Qvacell-ios?style=flat&logo=github&label=stars&color=000066)](https://github.com/albertolicea00/Qvacell-ios)
 ![HTML](https://img.shields.io/badge/HTML-E34F26?style=flat&logo=html5&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat&logo=alpinedotjs&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)
 
-Página de destino (landing page) + marcador USSD web para la aplicación iOS [CubaCell Connect](https://github.com/albertolicea00/CubaCellConnect). Sin paso de compilación.
+Página de destino (landing page) + marcador USSD web para la aplicación iOS [Qvacell](https://github.com/albertolicea00/Qvacell-ios). Sin paso de compilación.
 
 [Read English version](README.md)
 
@@ -28,7 +28,7 @@ A diferencia de [Banca Remota](https://github.com/albertolicea00/BancaRemota) (m
 
 ## Páginas
 
-**`index.html`** — página de destino: hero, funcionamiento (tres pasos), sección de catálogo (descarga de `ussd_codes.json`), tabla comparativa, Preguntas Frecuentes (FAQ), mapa de ruta (roadmap) y sección de **Apps similares**. Realiza una petición en el cliente a `https://api.github.com/repos/albertolicea00/cubacell-connect` para mostrar el conteo de estrellas de GitHub en vivo.
+**`index.html`** — página de destino: hero, funcionamiento (tres pasos), sección de catálogo (descarga de `ussd_codes.json`), tabla comparativa, Preguntas Frecuentes (FAQ), mapa de ruta (roadmap) y sección de **Apps similares**. Realiza una petición en el cliente a `https://api.github.com/repos/albertolicea00/Qvacell-ios` para mostrar el conteo de estrellas de GitHub en vivo.
 
 **`dial.html`** — marcador USSD web: busca en todo el catálogo de ETECSA por título, código o descripción; toca una tarjeta para abrir `tel:<code>` y realizar la llamada. Los códigos que necesitan un valor de variable (un número de tarjeta para `*662*{input}#`, un número telefónico para `#31#{input}#`) abren primero un pequeño paso de entrada — reflejando el `CodeDetailView` de la app iOS. Mismo modo oscuro, formulario de notificación y guía de instalación de iOS que la página de destino. Consulta **Soporte Offline** abajo para ver cómo obtiene sus datos y funciona sin conexión.
 
@@ -44,10 +44,10 @@ En Safari de iOS (detectado vía UA / `MacIntel` + multitáctil, no en modo stan
 
 ## Soporte Offline
 
-`dial.html` no incluye su propia copia del catálogo — siempre descarga el `codes.json` más reciente directamente desde el repositorio principal [CubaCellConnect](https://github.com/albertolicea00/cubacell-connect) (el mismo archivo que incluye la app iOS):
+`dial.html` no incluye su propia copia del catálogo — siempre descarga el `codes.json` más reciente directamente desde el repositorio principal [Qvacell](https://github.com/albertolicea00/Qvacell-ios) (el mismo archivo que incluye la app iOS):
 
 ```
-https://raw.githubusercontent.com/albertolicea00/cubacell-connect/refs/heads/main/CubacellConnect/codes.json
+https://raw.githubusercontent.com/albertolicea00/Qvacell-ios/refs/heads/main/Qvacell/codes.json
 ```
 
 La capacidad offline real reside en `sw.js`, un service worker registrado tanto en `index.html` como en `dial.html`. Almacena todo lo necesario para renderizar la app en Cache Storage (que no tiene expiración):
@@ -88,8 +88,8 @@ Otras aplicaciones de códigos USSD del mismo autor:
 
 ## Contribuir
 
-Consulta el [CONTRIBUTING.md](https://github.com/albertolicea00/CubaCellConnect/blob/main/CONTRIBUTING.md) del proyecto principal. Los Issues, PRs y mensajes de commit deben estar en inglés.
+Consulta el [CONTRIBUTING.md](https://github.com/albertolicea00/Qvacell-ios/blob/main/CONTRIBUTING.md) del proyecto principal. Los Issues, PRs y mensajes de commit deben estar en inglés.
 
 ---
 
-*Parte del proyecto [CubaCell Connect](https://github.com/albertolicea00/CubaCellConnect) por [Alberto Licea](https://www.linkedin.com/in/albertolicea00).*
+*Parte del proyecto [Qvacell](https://github.com/albertolicea00/Qvacell-ios) por [Alberto Licea](https://www.linkedin.com/in/albertolicea00).*

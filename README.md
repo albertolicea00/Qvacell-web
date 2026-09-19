@@ -1,12 +1,12 @@
-# 🇨🇺 CubaCell Connect — Landing Page
+# 🇨🇺 Qvacell — Landing Page
 
-[![GitHub Stars](https://img.shields.io/github/stars/albertolicea00/cubacell-connect?style=flat&logo=github&label=stars&color=000066)](https://github.com/albertolicea00/CubaCellConnect)
+[![GitHub Stars](https://img.shields.io/github/stars/albertolicea00/Qvacell-ios?style=flat&logo=github&label=stars&color=000066)](https://github.com/albertolicea00/Qvacell-ios)
 ![HTML](https://img.shields.io/badge/HTML-E34F26?style=flat&logo=html5&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat&logo=alpinedotjs&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)
 
-Landing page + web USSD dialer for the [CubaCell Connect](https://github.com/albertolicea00/CubaCellConnect) iOS app. No build step.
+Landing page + web USSD dialer for the [Qvacell](https://github.com/albertolicea00/Qvacell-ios) iOS app. No build step.
 
 [Mira la versión en español](README.es.md)
 
@@ -28,7 +28,7 @@ Unlike [Banca Remota](https://github.com/albertolicea00/BancaRemota) (multi-bank
 
 ## Pages
 
-**`index.html`** — landing page: hero, how-it-works (three steps), a catalog section (the `ussd_codes.json` download), a comparison table, FAQ, roadmap, and an **Apps similares** section (see below). Fetches `https://api.github.com/repos/albertolicea00/cubacell-connect` client-side to show live GitHub star count.
+**`index.html`** — landing page: hero, how-it-works (three steps), a catalog section (the `ussd_codes.json` download), a comparison table, FAQ, roadmap, and an **Apps similares** section (see below). Fetches `https://api.github.com/repos/albertolicea00/Qvacell-ios` client-side to show live GitHub star count.
 
 **`dial.html`** — web USSD dialer: search the full ETECSA catalog by title, code or description; tap a card to open `tel:<code>` and place the call. Codes that need a variable value (a card number for `*662*{input}#`, a phone number for `#31#{input}#`) open a small input step first — mirrors the iOS app's `CodeDetailView` (dial disabled until non-empty, `#` percent-encoded as `%23`). Same dark mode, notify form, and iOS install guide as the landing page. See **Offline support** below for how it gets its data and works with no connection.
 
@@ -44,10 +44,10 @@ On iOS Safari (detected via UA / `MacIntel` + multi-touch, not standalone yet), 
 
 ## Offline support
 
-`dial.html` does not ship its own copy of the catalog — it always pulls the latest `codes.json` straight from the main [CubaCellConnect repository](https://github.com/albertolicea00/cubacell-connect) (the exact file bundled by the iOS app):
+`dial.html` does not ship its own copy of the catalog — it always pulls the latest `codes.json` straight from the main [Qvacell repository](https://github.com/albertolicea00/Qvacell-ios) (the exact file bundled by the iOS app):
 
 ```
-https://raw.githubusercontent.com/albertolicea00/cubacell-connect/refs/heads/main/CubacellConnect/codes.json
+https://raw.githubusercontent.com/albertolicea00/Qvacell-ios/refs/heads/main/Qvacell/codes.json
 ```
 
 The actual offline capability lives in `sw.js`, a service worker registered from both `index.html` and `dial.html`. It caches everything needed to render the app into Cache Storage (which has no expiry):
@@ -90,8 +90,8 @@ Other USSD-code apps by the same author:
 
 ## Contributing
 
-See the main project's [CONTRIBUTING.md](https://github.com/albertolicea00/CubaCellConnect/blob/main/CONTRIBUTING.md). Issues, PRs, and commit messages must be in English.
+See the main project's [CONTRIBUTING.md](https://github.com/albertolicea00/Qvacell-ios/blob/main/CONTRIBUTING.md). Issues, PRs, and commit messages must be in English.
 
 ---
 
-_Part of the [CubaCell Connect](https://github.com/albertolicea00/CubaCellConnect) project by [Alberto Licea](https://www.linkedin.com/in/albertolicea00)._
+_Part of the [Qvacell](https://github.com/albertolicea00/Qvacell-ios) project by [Alberto Licea](https://www.linkedin.com/in/albertolicea00)._

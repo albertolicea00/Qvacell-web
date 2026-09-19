@@ -8,18 +8,18 @@ function app() {
     faqs: [
       {
         q: '¿Necesito internet para usar la app?',
-        a: 'No. CubaCell Connect no usa internet en ningún momento. Todo funciona mediante códigos USSD sobre la red telefónica de ETECSA, igual que cuando marcas el código manualmente en el teléfono.'
+        a: 'No. Qvacell no usa internet en ningún momento. Todo funciona mediante códigos USSD sobre la red telefónica de ETECSA, igual que cuando marcas el código manualmente en el teléfono.'
       },
       {
         q: '¿Es segura la app?',
-        a: 'Sí. No hay red, servidores ni cuentas — el catálogo completo de códigos viaja embebido en la propia app. No se recopila ningún dato. El código es open source: puedes revisarlo tú mismo en <a href="https://github.com/albertolicea00/CubaCellConnect" target="_blank" rel="noopener" class="text-navy dark:text-accent underline">GitHub</a>.'
+        a: 'Sí. No hay red, servidores ni cuentas — el catálogo completo de códigos viaja embebido en la propia app. No se recopila ningún dato. El código es open source: puedes revisarlo tú mismo en <a href="https://github.com/albertolicea00/Qvacell-ios" target="_blank" rel="noopener" class="text-navy dark:text-accent underline">GitHub</a>.'
       },
       {
         q: '¿Cuándo estará en la App Store?',
         a: 'Actualmente está en beta — solo disponible instalando desde el código fuente en GitHub. <button onclick="window.dispatchEvent(new CustomEvent(\'notify:open\'))" class="text-navy dark:text-accent underline cursor-pointer">Suscríbete</button> para recibir una notificación en cuanto se publique.'
       },
       {
-        q: '¿Puedo usar CubaCell Connect sin instalar la app?',
+        q: '¿Puedo usar Qvacell sin instalar la app?',
         a: 'Sí. Entra a <a href="dial.html" class="text-navy dark:text-accent underline hover:no-underline">/dial</a> — el marcador USSD corriendo directo en el navegador, sin Xcode ni cuenta de desarrollador. Agrégalo a tu pantalla de inicio y funciona incluso sin internet: después de la primera visita, la página y el catálogo de códigos quedan guardados en el propio navegador.'
       },
       {
@@ -43,7 +43,7 @@ function app() {
         }
       });
       window.addEventListener('notify:open', () => { this.notifyOpen = true; });
-      fetch('https://api.github.com/repos/albertolicea00/cubacell-connect')
+      fetch('https://api.github.com/repos/albertolicea00/Qvacell-ios')
         .then(r => r.json())
         .then(d => { if (d.stargazers_count !== undefined) this.githubStars = d.stargazers_count; })
         .catch(() => {});

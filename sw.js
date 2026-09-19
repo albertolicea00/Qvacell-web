@@ -8,7 +8,7 @@
 // anything else it sees (the remote codes catalog, etc.) via a
 // stale-while-revalidate strategy: serve the cached copy instantly, refetch
 // in the background to keep it fresh for next time.
-const CACHE_NAME = 'cubacell-connect-v1';
+const CACHE_NAME = 'qvacell-v1';
 
 // The catalog is precached here too (not just left to runtime interception) —
 // on a brand-new install the page's own first fetch for it fires from
@@ -16,7 +16,7 @@ const CACHE_NAME = 'cubacell-connect-v1';
 // (registration only starts on the 'load' event, which fires later), so it's
 // otherwise never controlled/cached and a subsequent fully-offline open has
 // no data to show. Precaching it here closes that race.
-const CODES_URL = 'https://raw.githubusercontent.com/albertolicea00/CubaCellConnect/main/CubaCellConnect/codes.json';
+const CODES_URL = 'https://raw.githubusercontent.com/albertolicea00/Qvacell-ios/main/Qvacell/codes.json';
 
 const PRECACHE_URLS = [
   '/',

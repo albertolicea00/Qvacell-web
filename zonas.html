@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Zonas WiFi — CubaCell Connect</title>
+  <title>Zonas WiFi — Qvacell</title>
   <meta name="description"
     content="Directorio offline de salas de navegación y zonas WiFi públicas de ETECSA (Cubacel), organizado por provincia." />
   <meta name="theme-color" content="#000066" />
@@ -14,13 +14,13 @@
 
   <!-- Open Graph & Twitter — same as index.html, so shared links show the
        same brand card regardless of which page gets shared. -->
-  <meta property="og:title" content="CubaCell Connect — Zonas WiFi de ETECSA" />
+  <meta property="og:title" content="Qvacell — Zonas WiFi de ETECSA" />
   <meta property="og:description"
     content="Busca salas de navegación y puntos de WiFi público de ETECSA por provincia, sin internet." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/og-image.svg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="CubaCell Connect — Zonas WiFi de ETECSA" />
+  <meta name="twitter:title" content="Qvacell — Zonas WiFi de ETECSA" />
   <meta name="twitter:description" content="Busca salas de navegación y puntos de WiFi público de ETECSA por provincia, sin internet." />
   <meta name="twitter:image" content="assets/og-image.svg" />
 
@@ -32,7 +32,7 @@
        for its own engine, but iOS Safari still requires it, so both stay. -->
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="CubaCell Connect" />
+  <meta name="apple-mobile-web-app-title" content="Qvacell" />
   <script>
     (function () {
       var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
@@ -119,9 +119,9 @@
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <a href="index.html" class="brand-logo-link flex items-center gap-2.5 font-bold text-navy dark:text-accent text-lg"
         onclick="return !document.documentElement.classList.contains('ios-standalone')">
-        <img src="assets/icon-black.svg" alt="CubaCell Connect" class="w-8 h-8 dark:hidden rounded-lg shadow-sm" />
-        <img src="assets/icon-white.svg" alt="CubaCell Connect" class="w-8 h-8 hidden dark:block rounded-lg shadow-sm" />
-        <span class="hidden sm:inline text-gray-900 dark:text-white font-bold">CubaCell Connect</span>
+        <img src="assets/icon-black.svg" alt="Qvacell" class="w-8 h-8 dark:hidden rounded-lg shadow-sm" />
+        <img src="assets/icon-white.svg" alt="Qvacell" class="w-8 h-8 hidden dark:block rounded-lg shadow-sm" />
+        <span class="hidden sm:inline text-gray-900 dark:text-white font-bold">Qvacell</span>
       </a>
 
       <a href="index.html" aria-label="Volver al inicio" class="back-home-link
@@ -277,7 +277,7 @@
        since an installed app shouldn't show a webpage-style footer. -->
   <footer class="legal-footer pb-8 pt-6 px-4 text-center text-xs text-gray-500 dark:text-gray-600">
     <div class="flex flex-wrap items-center justify-center gap-3">
-      <a href="index.html" class="footer-link">&larr; Volver a CubaCell Connect</a>
+      <a href="index.html" class="footer-link">&larr; Volver a Qvacell</a>
       <span class="text-gray-300 dark:text-gray-700">·</span>
       <a href="privacy.html" class="footer-link">Política de Privacidad</a>
       <span class="text-gray-300 dark:text-gray-700">·</span>
@@ -377,7 +377,7 @@
   <script>
     // Same data source as the iOS app's own bundled file — fetched straight
     // from GitHub raw, not duplicated/re-hosted anywhere.
-    const WIFI_URL = 'https://raw.githubusercontent.com/albertolicea00/CubaCellConnect/main/CubaCellConnect/wifi_navigation_rooms.json';
+    const WIFI_URL = 'https://raw.githubusercontent.com/albertolicea00/Qvacell-ios/main/Qvacell/wifi_navigation_rooms.json';
 
     function zonasOps() {
       return {
