@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es" x-data="{ darkMode: document.documentElement.classList.contains('dark') }"
+  :class="{ 'dark': darkMode }" style="overflow-x:hidden">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Zonas WiFi — CubaCell Connect</title>
+  <meta name="description"
+    content="Directorio offline de salas de navegación y zonas WiFi públicas de ETECSA (Cubacel), organizado por provincia." />
+  <meta name="theme-color" content="#000066" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="apple-touch-icon" href="assets/icon-black.svg" />
+
+  <!-- Open Graph & Twitter — same as index.html, so shared links show the
+       same brand card regardless of which page gets shared. -->
+  <meta property="og:title" content="CubaCell Connect — Zonas WiFi de ETECSA" />
+  <meta property="og:description"
+    content="Busca salas de navegación y puntos de WiFi público de ETECSA por provincia, sin internet." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/og-image.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CubaCell Connect — Zonas WiFi de ETECSA" />
+  <meta name="twitter:description" content="Busca salas de navegación y puntos de WiFi público de ETECSA por provincia, sin internet." />
+  <meta name="twitter:image" content="assets/og-image.svg" />
+
+  <!-- iOS "Add to Home Screen": launched icon opens straight into this page,
+       standalone (no Safari chrome). Irrelevant to Android/desktop Chrome,
+       which use the web manifest instead — this site has none, by design. -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <!-- Standard, non-prefixed equivalent — Chrome deprecated the apple- one
+       for its own engine, but iOS Safari still requires it, so both stay. -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="CubaCell Connect" />
+  <script>
+    (function () {
+      var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (isIOS) document.documentElement.classList.add('ios');
+      if (window.navigator.standalone === true) document.documentElement.classList.add('ios-standalone');
+    })();
+  </script>
+
+  <!-- Tailwind CDN + config (same as index.html/dial.html) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            navy: '#000066',
+            accent: '#0099cc',
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Segoe UI', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Pre-render Dark Mode Init to prevent FOUC -->
+  <script>
+    if (localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+
+  <style>
+    /* Installed (standalone) launches behave like a native app screen —
+       no webpage-style legal footer once it's not a browser tab anymore. */
+    .ios-standalone .legal-footer { display: none; }
+
+    .province-pill {
+      flex-shrink: 0;
+      padding: 0.45rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+      background: #f3f4f6;
+      color: #6b7280;
+      transition: background-color .15s, color .15s;
+    }
+    .dark .province-pill { background: rgba(255,255,255,.08); color: #9ca3af; }
+    .province-pill.active { background: var(--color-navy); color: #fff; }
+    .dark .province-pill.active { background: var(--color-accent); color: #04121a; }
+
+    .spot-chip {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 9999px;
+      background: #f3f4f6;
+      color: #374151;
+    }
+    .dark .spot-chip { background: rgba(255,255,255,.08); color: #d1d5db; }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans antialiased transition-colors duration-300 overflow-x-hidden">
+
+  <!-- ════════════════════════════════════════
+       NAV (simplified — links back to landing page)
+  ════════════════════════════════════════ -->
+  <nav id="zonas-nav" style="z-index: 9999;"
+    class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="index.html" class="brand-logo-link flex items-center gap-2.5 font-bold text-navy dark:text-accent text-lg"
+        onclick="return !document.documentElement.classList.contains('ios-standalone')">
+        <img src="assets/icon-black.svg" alt="CubaCell Connect" class="w-8 h-8 dark:hidden rounded-lg shadow-sm" />
+        <img src="assets/icon-white.svg" alt="CubaCell Connect" class="w-8 h-8 hidden dark:block rounded-lg shadow-sm" />
+        <span class="hidden sm:inline text-gray-900 dark:text-white font-bold">CubaCell Connect</span>
+      </a>
+
+      <a href="index.html" aria-label="Volver al inicio" class="back-home-link
+        inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-navy dark:hover:text-accent transition-colors"
+        onclick="if (document.documentElement.classList.contains('ios-standalone')) { window.open('index.html', '_blank'); return false; }">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        <span class="sm:hidden">Inicio</span>
+        <span class="hidden sm:inline">Volver al inicio</span>
+      </a>
+
+      <div class="flex items-center gap-2">
+        <button @click="window.dispatchEvent(new CustomEvent('open-install-guide'))" type="button"
+          class="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-300 text-sm font-medium"
+          aria-label="Instalar app">
+          <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" viewBox="0 0 24 24">
+            <path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+          </svg>
+          <span class="hidden sm:inline">Instalar</span>
+        </button>
+
+        <button @click="darkMode = !darkMode; localStorage.setItem('darkMode', darkMode)"
+          class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+          :title="darkMode ? 'Modo claro' : 'Modo oscuro'">
+          <span x-show="!darkMode"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+            </svg></span>
+          <span x-show="darkMode"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 3v2.25m0 13.5V21m8.974-8.974h-2.25M4.25 12h2.25m13.308-7.308l-1.591 1.591M6.829 17.171l-1.591 1.591m12.932 0l-1.591-1.591M6.829 6.829L5.238 5.238M17.5 12A5.5 5.5 0 1112 6.5a5.5 5.5 0 015.5 5.5z" />
+            </svg></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div x-data="zonasOps()" x-cloak>
+
+  <main class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 min-h-screen bg-gray-50 dark:bg-[rgb(12,16,26)] relative overflow-hidden">
+
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute top-0 right-0 w-96 h-96 rounded-full bg-navy opacity-[0.08] dark:opacity-[0.05] blur-3xl"></div>
+      <div class="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-accent opacity-[0.10] dark:opacity-[0.06] blur-3xl"></div>
+    </div>
+
+    <div class="w-full max-w-3xl mx-auto relative">
+
+      <div class="text-center mb-8">
+        <span class="section-badge">Salas y Zonas WiFi</span>
+        <h1 class="section-title">Directorio de Navegación</h1>
+        <p class="section-subtitle">Salas de navegación y WiFi público de ETECSA, offline y por provincia.</p>
+      </div>
+
+      <!-- Province selector — horizontally scrollable pill row -->
+      <div class="w-full overflow-x-auto top-scrollbar pb-3 mb-4 flex gap-2" x-show="provinces.length > 0">
+        <template x-for="p in provinces" :key="p.province">
+          <button type="button" @click="activeProvince = p.province" class="province-pill"
+            :class="activeProvince === p.province ? 'active' : ''" x-text="p.province"></button>
+        </template>
+      </div>
+
+      <!-- Search within the selected province -->
+      <div class="max-w-md mx-auto mb-8 relative" x-show="provinces.length > 0">
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none"
+          stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M21 21l-4.35-4.35M18 10.5a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0z" />
+        </svg>
+        <input x-model="query" type="text" placeholder="Buscar sala, dirección o municipio…"
+          class="w-full pl-11 pr-10 py-3 rounded-xl bg-gray-50 dark:bg-white/10 border border-gray-200 dark:border-white/15 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-navy dark:focus:ring-accent transition" />
+        <button x-show="query" @click="query = ''" type="button"
+          class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+          aria-label="Limpiar búsqueda">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div x-show="provinces.length === 0" class="py-16 text-center text-sm text-gray-500 dark:text-gray-400">
+        Cargando directorio…
+      </div>
+
+      <template x-if="currentProvince">
+        <div class="space-y-8">
+
+          <!-- Salas de navegación -->
+          <section x-show="visibleRooms.length > 0">
+            <h2 class="text-[0.68rem] font-extrabold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-3 pl-0.5">
+              Salas de Navegación
+            </h2>
+            <div class="space-y-2">
+              <template x-for="room in visibleRooms" :key="room.name + room.address">
+                <a :href="mapsSearchURL(room.name + ' ' + room.address)" target="_blank" rel="noopener"
+                  class="code-card block">
+                  <span class="min-w-0 text-left">
+                    <span class="code-card-title block truncate" x-text="room.name"></span>
+                    <span class="code-card-desc block" x-text="room.address || 'Dirección no disponible'"></span>
+                    <span x-show="room.positions" class="code-card-code block">
+                      <span x-text="room.positions + ' posiciones'"></span>
+                    </span>
+                  </span>
+                  <span class="code-card-icon flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                    </svg>
+                  </span>
+                </a>
+              </template>
+            </div>
+          </section>
+
+          <!-- Hotspots públicos, agrupados por municipio -->
+          <section x-show="visibleHotspots.length > 0">
+            <h2 class="text-[0.68rem] font-extrabold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-3 pl-0.5">
+              WiFi Público
+            </h2>
+            <div class="space-y-4">
+              <template x-for="group in visibleHotspots" :key="group.municipality">
+                <div class="bg-white dark:bg-gray-900 rounded-2xl p-4 border border-gray-100 dark:border-gray-800/80">
+                  <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-2" x-text="group.municipality"></h3>
+                  <div class="flex flex-wrap gap-1.5">
+                    <template x-for="spot in group.spots" :key="spot">
+                      <span class="spot-chip" x-text="spot"></span>
+                    </template>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </section>
+
+          <div x-show="query.trim() && visibleRooms.length === 0 && visibleHotspots.length === 0" class="py-10 text-center">
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              Nada en <span class="font-semibold" x-text="activeProvince"></span> para "<span x-text="query"></span>".
+            </p>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1" x-show="matchingOtherProvinces.length > 0">
+              Encontrado en: <span x-text="matchingOtherProvinces.join(', ')"></span>.
+            </p>
+          </div>
+        </div>
+      </template>
+
+    </div>
+  </main>
+
+  <!-- Legal links — hidden once installed to the home screen (standalone),
+       since an installed app shouldn't show a webpage-style footer. -->
+  <footer class="legal-footer pb-8 pt-6 px-4 text-center text-xs text-gray-500 dark:text-gray-600">
+    <div class="flex flex-wrap items-center justify-center gap-3">
+      <a href="index.html" class="footer-link">&larr; Volver a CubaCell Connect</a>
+      <span class="text-gray-300 dark:text-gray-700">·</span>
+      <a href="privacy.html" class="footer-link">Política de Privacidad</a>
+      <span class="text-gray-300 dark:text-gray-700">·</span>
+      <a href="terms.html" class="footer-link">Términos y Condiciones</a>
+      <span class="text-gray-300 dark:text-gray-700">·</span>
+      <a href="eula.html" class="footer-link">EULA</a>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════
+       MODAL — INSTALAR EN IPHONE (iOS only) — identical to dial.html's
+  ════════════════════════════════════════ -->
+  <div x-show="showInstallGuide" x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0" class="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center sm:p-4"
+    style="display:none">
+
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="dismissInstallGuide()"></div>
+
+    <div x-show="showInstallGuide" x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 translate-y-full sm:translate-y-2 scale-100 sm:scale-95"
+      x-transition:enter-end="opacity-100 translate-y-0 scale-100" x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+      x-transition:leave-end="opacity-0 translate-y-full sm:translate-y-2 scale-100 sm:scale-95"
+      class="relative w-full sm:max-w-md bg-white dark:bg-gray-900 rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden"
+      @keydown.escape.window="dismissInstallGuide()">
+
+      <div class="h-1 bg-gradient-to-r from-navy via-accent to-navy"></div>
+
+      <div class="sm:hidden flex justify-center pt-3 pb-1" aria-hidden="true">
+        <span class="w-10 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+      </div>
+
+      <button @click="dismissInstallGuide()"
+        class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-gray-500 dark:text-gray-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <div class="p-8 pb-[max(2rem,env(safe-area-inset-bottom))] sm:pb-8">
+        <div
+          class="inline-flex items-center gap-2 text-navy dark:text-accent text-xs font-semibold uppercase tracking-widest rounded-full px-3 py-1 mb-5">
+          <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+          Acceso directo en tu iPhone
+        </div>
+
+        <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Instala el directorio</h2>
+        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">Agrega esta página a tu pantalla de
+          inicio y ábrela directo, sin pasar por Safari cada vez.</p>
+
+        <ol class="space-y-4 mb-2">
+          <li class="flex items-start gap-3">
+            <span
+              class="w-7 h-7 flex-shrink-0 rounded-full bg-navy/15 dark:bg-accent/15 text-navy dark:text-accent font-bold text-sm flex items-center justify-center">1</span>
+            <p class="text-sm text-gray-700 dark:text-gray-300 pt-0.5">Toca el ícono de <strong>Compartir</strong>
+              <svg class="inline w-4 h-4 -mt-0.5" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                <path d="M12 16V4M12 4l-3.5 3.5M12 4l3.5 3.5" />
+                <path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+              </svg>
+              en la barra de Safari.
+            </p>
+          </li>
+          <li class="flex items-start gap-3">
+            <span
+              class="w-7 h-7 flex-shrink-0 rounded-full bg-navy/15 dark:bg-accent/15 text-navy dark:text-accent font-bold text-sm flex items-center justify-center">2</span>
+            <p class="text-sm text-gray-700 dark:text-gray-300 pt-0.5">Desliza y elige <strong>Agregar a inicio</strong>.
+            </p>
+          </li>
+          <li class="flex items-start gap-3">
+            <span
+              class="w-7 h-7 flex-shrink-0 rounded-full bg-navy/15 dark:bg-accent/15 text-navy dark:text-accent font-bold text-sm flex items-center justify-center">3</span>
+            <p class="text-sm text-gray-700 dark:text-gray-300 pt-0.5">Toca <strong>Agregar</strong> arriba a la
+              derecha — listo.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- notifyForm() etc. — shared with index.html/dial.html -->
+  <script src="app.js"></script>
+
+  <!-- Offline shell — see sw.js. -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch((err) => console.warn('SW registration failed:', err));
+      });
+    }
+  </script>
+
+  <script>
+    // Same data source as the iOS app's own bundled file — fetched straight
+    // from GitHub raw, not duplicated/re-hosted anywhere.
+    const WIFI_URL = 'https://raw.githubusercontent.com/albertolicea00/CubaCellConnect/main/CubaCellConnect/wifi_navigation_rooms.json';
+
+    function zonasOps() {
+      return {
+        provinces: [],
+        query: '',
+        activeProvince: null,
+
+        isIOS: false,
+        isStandalone: false,
+        showInstallGuide: false,
+
+        get currentProvince() {
+          return this.provinces.find(p => p.province === this.activeProvince) || null;
+        },
+
+        get visibleRooms() {
+          if (!this.currentProvince) return [];
+          const rooms = this.currentProvince.rooms || [];
+          const q = this.query.trim().toLowerCase();
+          if (!q) return rooms;
+          return rooms.filter(r =>
+            r.name.toLowerCase().includes(q) || (r.address || '').toLowerCase().includes(q)
+          );
+        },
+
+        get visibleHotspots() {
+          if (!this.currentProvince) return [];
+          const groups = this.currentProvince.hotspots || [];
+          const q = this.query.trim().toLowerCase();
+          if (!q) return groups;
+          return groups
+            .map(group => {
+              if (group.municipality.toLowerCase().includes(q)) return group;
+              const spots = (group.spots || []).filter(s => s.toLowerCase().includes(q));
+              return spots.length > 0 ? { municipality: group.municipality, spots } : null;
+            })
+            .filter(Boolean);
+        },
+
+        /// Other provinces that DO match the current query, shown only once the active
+        /// province's own search comes up empty — same "found elsewhere" nudge as the search
+        /// tabs in the app, not a full cross-province result list.
+        get matchingOtherProvinces() {
+          const q = this.query.trim().toLowerCase();
+          if (!q) return [];
+          return this.provinces
+            .filter(p => p.province !== this.activeProvince)
+            .filter(p => {
+              const roomMatch = (p.rooms || []).some(r =>
+                r.name.toLowerCase().includes(q) || (r.address || '').toLowerCase().includes(q)
+              );
+              const hotspotMatch = (p.hotspots || []).some(g =>
+                g.municipality.toLowerCase().includes(q) || (g.spots || []).some(s => s.toLowerCase().includes(q))
+              );
+              return roomMatch || hotspotMatch;
+            })
+            .map(p => p.province);
+        },
+
+        mapsSearchURL(query) {
+          return 'https://maps.apple.com/?q=' + encodeURIComponent(query);
+        },
+
+        async loadProvinces() {
+          try {
+            const res = await fetch(WIFI_URL);
+            const data = await res.json();
+            this.provinces = Array.isArray(data) ? data : [];
+            if (!this.activeProvince && this.provinces.length > 0) {
+              this.activeProvince = this.provinces[0].province;
+            }
+          } catch (e) {
+            console.error('Failed to load WiFi rooms directory:', e);
+          }
+        },
+
+        // Install-guide modal — same behavior as dial.html's.
+        openInstallGuide() {
+          this.showInstallGuide = true;
+        },
+        dismissInstallGuide() {
+          this.showInstallGuide = false;
+          localStorage.setItem('installGuideSeenAt', String(Date.now()));
+        },
+
+        async init() {
+          await this.loadProvinces();
+
+          this.isIOS = document.documentElement.classList.contains('ios');
+          this.isStandalone = document.documentElement.classList.contains('ios-standalone');
+          const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+          const lastSeen = Number(localStorage.getItem('installGuideSeenAt') || 0);
+          if (this.isIOS && !this.isStandalone && Date.now() - lastSeen > WEEK_MS) {
+            setTimeout(() => { this.showInstallGuide = true }, 1500);
+          }
+
+          // Nav's "Install" button lives outside this component's x-data scope
+          window.addEventListener('open-install-guide', () => { this.openInstallGuide(); });
+        },
+      };
+    }
+  </script>
+</body>
+
+</html>

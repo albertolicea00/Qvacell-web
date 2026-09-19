@@ -83,7 +83,7 @@
       <div class="hidden md:flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
         <a href="#features" class="nav-link">Funciones</a>
         <a href="/dial.html" class="nav-link">Marcador USSD</a>
-        <a href="/speed.html" class="nav-link">SpeedTest</a>
+        <a href="/zonas.html" class="nav-link">Zonas WiFi</a>
         <a href="#limitations" class="nav-link">Limitaciones</a>
       </div>
 
@@ -134,8 +134,8 @@
           class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Funciones</a>
         <a href="/dial.html" @click="mobileMenuOpen = false"
           class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Marcador USSD</a>
-        <a href="/speed.html" @click="mobileMenuOpen = false"
-          class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">SpeedTest</a>
+        <a href="/zonas.html" @click="mobileMenuOpen = false"
+          class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Zonas WiFi</a>
         <a href="#limitations" @click="mobileMenuOpen = false"
           class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Limitaciones</a>
         <div class="pt-2 pb-1">
@@ -235,7 +235,6 @@
              {id:'help-lines',      light:'assets/mockups/help-lines-light.webp',      dark:'assets/mockups/help-lines-dark.webp'},
              {id:'settings',        light:'assets/mockups/settings-light.webp',        dark:'assets/mockups/settings-dark.webp'},
              {id:'reminders',       light:'assets/mockups/reminders-light.webp',       dark:'assets/mockups/reminders-dark.webp'},
-             {id:'speed-test',      light:'assets/mockups/speed-test-light.webp',      dark:'assets/mockups/speed-test-dark.webp'},
            ])">
         <div class="relative select-none w-56 h-[27rem] sm:w-64 sm:h-[30rem]" style="touch-action:none;"
           @pointerdown="startDrag($event)" @pointermove.window="drag($event)" @pointerup.window="endDrag()"
@@ -320,7 +319,7 @@
               </div>
               <h3 class="text-base font-bold text-gray-900 dark:text-white">Directorio Wi-Fi y Salas</h3>
             </div>
-            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Búsqueda offline de salas de navegación ETECSA y puntos de Wi-Fi público organizados por provincia.</p>
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Búsqueda offline de salas de navegación ETECSA y puntos de Wi-Fi público organizados por provincia. <a href="zonas.html" class="text-navy dark:text-accent underline hover:no-underline">Pruébalo en la web &rarr;</a></p>
           </div>
 
           <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm hover:shadow-md transition-all">
@@ -331,16 +330,6 @@
               <h3 class="text-base font-bold text-gray-900 dark:text-white">Servicios SMS</h3>
             </div>
             <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Explora y pre-llena consultas por SMS (noticias, clima, deportes, utilidades) sin envíos silenciosos ni sorpresas.</p>
-          </div>
-
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm hover:shadow-md transition-all">
-            <div class="flex items-center gap-3 mb-4">
-              <div class="w-10 h-10 rounded-xl bg-accent/10 dark:bg-accent/20 text-accent flex items-center justify-center shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              </div>
-              <h3 class="text-base font-bold text-gray-900 dark:text-white">SpeedTest</h3>
-            </div>
-            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Prueba de ping, velocidad de bajada y subida directamente en la app utilizando endpoints de Cloudflare.</p>
           </div>
 
           <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm hover:shadow-md transition-all">
@@ -796,7 +785,7 @@
           <h4 class="text-gray-900 dark:text-white font-semibold mb-4 text-sm">Proyecto</h4>
           <ul class="space-y-2 text-sm">
             <li><a href="/dial.html" class="footer-link">Marcador USSD</a></li>
-            <li><a href="/speed.html" class="footer-link">SpeedTest</a></li>
+            <li><a href="/zonas.html" class="footer-link">Zonas WiFi</a></li>
             <li><a href="https://github.com/albertolicea00/CubaCellConnect/issues"
               target="_blank" rel="noopener" class="footer-link">Reportar bug</a>
             </li>
