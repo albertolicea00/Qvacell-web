@@ -207,7 +207,7 @@
             :class="activeProvince === p.province ? 'active' : ''">
             <span x-text="p.province"></span>
             <span x-show="matchingOtherProvinces.includes(p.province)" 
-                  class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border border-white dark:border-[rgb(12,16,26)]"></span>
+                  class="absolute -top-1 -right-n1 w-2.5 h-2.5 bg-yellow-500 rounded-full border border-white dark:border-[rgb(12,16,26)]"></span>
           </button>
         </template>
       </div>
