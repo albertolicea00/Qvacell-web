@@ -1,20 +1,20 @@
 name: WiFi rooms sync check
 
-# Weekly guard: keeps the bundled ETECSA navigation-rooms directory (Ajustes ›
-# Salas y Zonas WiFi) in sync with ETECSA's own site. ETECSA may not be
-# reachable from wherever this runs (GitHub-hosted runners are outside Cuba,
-# and some sites block cloud/datacenter IP ranges even though they're open to
-# regular visitors) — the script checks reachability ONCE up front and exits
-# early (no failure, no issue) instead of burning Actions minutes retrying all
-# 16 province pages one by one when it can't reach ETECSA at all.
+# Weekly guard: keeps the iOS (qvacell-ios) and Android (qvacell-apk) apps'
+# bundled ETECSA navigation-rooms directories in sync with ETECSA's own site.
+# This repo (qvacell-web) has no bundled copy of its own — both platform
+# files are fetched remotely (hardcoded raw GitHub URLs in the script) since
+# there's nothing local here to check. ETECSA may not be reachable from
+# wherever this runs (GitHub-hosted runners are outside Cuba, and some sites
+# block cloud/datacenter IP ranges even though they're open to regular
+# visitors) — the script checks reachability ONCE up front and exits early
+# (no failure, no issue) instead of burning Actions minutes retrying all
+# 16 province pages one by one, per platform, when it can't reach ETECSA at all.
 
 on:
   workflow_dispatch:
-  # pull_request:
-  #   paths:
-  #     - "Qvacell/wifi_navigation_rooms.json"
-  #     - ".github/scripts/check-wifi-rooms-sync.mjs"
-  #     - ".github/workflows/wifi-rooms-sync-check.yml"
+  # schedule:
+  #   - cron: "0 6 * * 1" # weekly, Monday 06:00 UTC
 
 permissions:
   contents: read

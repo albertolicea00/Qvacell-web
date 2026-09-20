@@ -1,36 +1,54 @@
 #!/usr/bin/env node
 /**
- * WiFi navigation rooms sync check — Qvacell.
+ * WiFi navigation rooms sync check — Qvacell (web repo).
  *
- * Ajustes › Salas y Zonas WiFi bundles a scraped copy of ETECSA's own public
- * "Navigation rooms and public spaces (WIFI)" directory (see README § Navigation
- * Rooms & Public WIFI Spaces). Unlike codes.json there is no API for this —
- * this script re-scrapes each province's page and diffs it against the bundled
- * JSON, reporting added/removed rooms or changed position counts.
+ * This repo doesn't bundle its own copy of wifi_navigation_rooms.json — the
+ * canonical copies live in the iOS (qvacell-ios) and Android (qvacell-apk)
+ * repos. This script fetches BOTH of those remotely (hardcoded raw GitHub
+ * URLs, since there's no local file to read here) and diffs each against a
+ * fresh scrape of ETECSA's own "Navigation rooms and public spaces (WIFI)"
+ * directory, reporting added/removed rooms or changed position counts per
+ * platform.
+ *
+ * This intentionally does NOT check whether iOS and Android agree with each
+ * other — that's what cross-platform-sync-check.yml in each of those repos
+ * already does. This only checks each against the ETECSA source of truth.
  *
  * ETECSA's site may not be reachable from wherever this runs (GitHub-hosted
  * runners are outside Cuba, and some sites block known cloud/datacenter IP
  * ranges even though they're open to regular visitors). Reachability is
  * checked ONCE, up front, with a short timeout — if that fails, the script
  * exits immediately (exit 2) instead of burning Actions minutes retrying all
- * 16 province pages one by one.
+ * 16 province pages one by one, twice over.
  *
  * Zero dependencies. Node 18+ (uses global fetch).
- * Exit 0 = in sync. Exit 1 = drift found. Exit 2 = ETECSA unreachable (inconclusive).
+ * Exit 0 = both in sync. Exit 1 = drift found in at least one platform.
+ * Exit 2 = ETECSA unreachable (inconclusive).
  *
  * Local testing: node .github/scripts/check-wifi-rooms-sync.mjs
  */
 
 import fs from "node:fs";
 
-const LOCAL_FILE = "Qvacell/wifi_navigation_rooms.json";
+const SOURCES = [
+  {
+    label: "iOS (qvacell-ios)",
+    url: "https://raw.githubusercontent.com/albertolicea00/Qvacell-ios/main/Qvacell/wifi_navigation_rooms.json",
+  },
+  {
+    label: "Android (qvacell-apk)",
+    url: "https://raw.githubusercontent.com/albertolicea00/Qvacell-apk/main/app/src/main/assets/wifi_navigation_rooms.json",
+  },
+];
+
 const BASE_URL = "https://www.etecsa.cu/en/rooms-public-spaces";
 const FETCH_TIMEOUT_MS = 15_000;
 const REACHABILITY_TIMEOUT_MS = 10_000;
 const DELAY_BETWEEN_REQUESTS_MS = 500;
 
-// Same province → `provincia` id mapping documented in README § Navigation
-// Rooms & Public WIFI Spaces — keep both in sync if ETECSA ever renumbers these.
+// Same province → `provincia` id mapping documented in each app's README §
+// Navigation Rooms & Public WIFI Spaces — keep all three in sync if ETECSA
+// ever renumbers these.
 const PROVINCE_IDS = {
   "Pinar del Río": 49,
   Artemisa: 33,
@@ -103,15 +121,17 @@ function diffProvince(province, local, remote) {
   return { province, missing, extra };
 }
 
-function report(diffs, unreachablePages) {
-  say(`## WiFi navigation rooms sync check`);
+function reportSource(label, sourceUrl, diffs, unreachablePages) {
+  say(`## ${label}`);
   say();
-  say(`Source: [ETECSA rooms-public-spaces](${BASE_URL}), one page per province`);
-  say(`Local data: \`${LOCAL_FILE}\``);
+  say(`Source data: [${sourceUrl}](${sourceUrl})`);
   say();
 
-  for (const { province, missing, extra } of diffs) {
-    if (!missing.length && !extra.length) continue;
+  const drifted = diffs.filter((d) => d.missing.length || d.extra.length);
+  if (!drifted.length) {
+    say("In sync with ETECSA's site.");
+  }
+  for (const { province, missing, extra } of drifted) {
     say(`### ${province}`);
     if (missing.length) {
       say(`${missing.length} room(s) on ETECSA's site but missing here (app is behind):`);
@@ -129,31 +149,29 @@ function report(diffs, unreachablePages) {
   }
 
   if (unreachablePages.length) {
-    say(`### Could not fetch (skipped, not counted as drift)`);
-    unreachablePages.forEach((p) => say(`- ${p}`));
+    say(`Could not fetch (skipped, not counted as drift): ${unreachablePages.join(", ")}`);
     say();
   }
-
-  say(
-    `Reconcile by re-scraping ETECSA's site and updating \`${LOCAL_FILE}\` to match — this data is bundled, not fetched live (see README).`
-  );
 }
 
-async function main() {
-  if (!(await checkReachable())) {
-    console.log(
-      "ETECSA's site is not reachable from this runner (likely geo-restricted or blocking this IP range " +
-        "— GitHub-hosted runners run outside Cuba). Skipping all province checks rather than burning " +
-        "Actions minutes retrying pages that will keep failing the same way."
-    );
-    process.exit(2);
+async function checkOneSource(source) {
+  let remoteJson;
+  try {
+    const res = await fetchWithTimeout(source.url, FETCH_TIMEOUT_MS);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    remoteJson = await res.json();
+  } catch (err) {
+    say(`## ${source.label}`);
+    say();
+    say(`Could not fetch this platform's bundled file (${source.url}): ${err.message}`);
+    say();
+    return { drift: false, fetchFailed: true };
   }
 
-  const localData = JSON.parse(fs.readFileSync(LOCAL_FILE, "utf8"));
   const diffs = [];
   const unreachablePages = [];
 
-  for (const entry of localData) {
+  for (const entry of remoteJson) {
     const id = PROVINCE_IDS[entry.province];
     if (id === undefined) {
       console.log(`No known ETECSA province id for "${entry.province}" — skipping (update PROVINCE_IDS).`);
@@ -167,7 +185,7 @@ async function main() {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       html = await res.text();
     } catch (err) {
-      console.log(`Failed to fetch ${entry.province} (provincia=${id}): ${err.message}`);
+      console.log(`Failed to fetch ${entry.province} (provincia=${id}) for ${source.label}: ${err.message}`);
       unreachablePages.push(entry.province);
       await sleep(DELAY_BETWEEN_REQUESTS_MS);
       continue;
@@ -178,19 +196,32 @@ async function main() {
   }
 
   const drift = diffs.some((d) => d.missing.length || d.extra.length);
+  reportSource(source.label, source.url, diffs, unreachablePages);
+  return { drift, fetchFailed: false };
+}
 
-  if (drift) {
-    report(diffs, unreachablePages);
-    finish(true);
-  } else {
-    const roomCount = localData.reduce((sum, p) => sum + p.rooms.length, 0);
-    say(`In sync: ${roomCount} room(s) across ${localData.length} province(s) match ETECSA's site.`);
-    if (unreachablePages.length) {
-      say();
-      say(`(${unreachablePages.length} province page(s) could not be fetched and were skipped: ${unreachablePages.join(", ")})`);
-    }
-    finish(false);
+async function main() {
+  if (!(await checkReachable())) {
+    console.log(
+      "ETECSA's site is not reachable from this runner (likely geo-restricted or blocking this IP range " +
+        "— GitHub-hosted runners run outside Cuba). Skipping all province checks rather than burning " +
+        "Actions minutes retrying pages that will keep failing the same way."
+    );
+    process.exit(2);
   }
+
+  say(`# WiFi navigation rooms sync check`);
+  say();
+  say(`Compares each platform's bundled directory against [ETECSA's own site](${BASE_URL}).`);
+  say();
+
+  let anyDrift = false;
+  for (const source of SOURCES) {
+    const { drift } = await checkOneSource(source);
+    anyDrift = anyDrift || drift;
+  }
+
+  finish(anyDrift);
 }
 
 function finish(drift) {
