@@ -83,10 +83,10 @@
 
     .province-pill {
       flex-shrink: 0;
-      padding: 0.45rem 0.9rem;
+      padding: 0.42rem 0.7rem;
       border-radius: 9999px;
-      font-size: 0.8rem;
-      font-weight: 700;
+      font-size: 0.6rem;
+      font-weight: 600;
       white-space: nowrap;
       background: #f3f4f6;
       color: #6b7280;
@@ -180,30 +180,32 @@
         <p class="section-subtitle">Salas de navegación y WiFi público de ETECSA, offline y por provincia.</p>
       </div>
 
-      <!-- Province selector — horizontally scrollable pill row -->
-      <div class="w-full overflow-x-auto top-scrollbar pb-3 mb-4 flex gap-2" x-show="provinces.length > 0">
+      <!-- Search within the selected province (Sticky) -->
+      <div class="sticky top-16 z-40 py-4 bg-gray-50/95 dark:bg-[rgb(12,16,26)]/95 backdrop-blur-md" x-show="provinces.length > 0">
+        <div class="max-w-md mx-auto relative">
+          <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none"
+            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M21 21l-4.35-4.35M18 10.5a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0z" />
+          </svg>
+          <input x-model="query" type="text" placeholder="Buscar sala, dirección o municipio…"
+            class="w-full pl-11 pr-10 py-3 rounded-xl bg-white dark:bg-white/10 border border-gray-200 dark:border-white/15 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-navy dark:focus:ring-accent transition shadow-sm" />
+          <button x-show="query" @click="query = ''" type="button"
+            class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+            aria-label="Limpiar búsqueda">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Province selector -->
+      <div class="w-full flex flex-wrap gap-2 pb-6 mb-2 mt-2" x-show="provinces.length > 0">
         <template x-for="p in provinces" :key="p.province">
           <button type="button" @click="activeProvince = p.province" class="province-pill"
             :class="activeProvince === p.province ? 'active' : ''" x-text="p.province"></button>
         </template>
-      </div>
-
-      <!-- Search within the selected province -->
-      <div class="max-w-md mx-auto mb-8 relative" x-show="provinces.length > 0">
-        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" fill="none"
-          stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M21 21l-4.35-4.35M18 10.5a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0z" />
-        </svg>
-        <input x-model="query" type="text" placeholder="Buscar sala, dirección o municipio…"
-          class="w-full pl-11 pr-10 py-3 rounded-xl bg-gray-50 dark:bg-white/10 border border-gray-200 dark:border-white/15 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-navy dark:focus:ring-accent transition" />
-        <button x-show="query" @click="query = ''" type="button"
-          class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
-          aria-label="Limpiar búsqueda">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
       </div>
 
       <div x-show="provinces.length === 0" class="py-16 text-center text-sm text-gray-500 dark:text-gray-400">
@@ -220,8 +222,7 @@
             </h2>
             <div class="space-y-2">
               <template x-for="room in visibleRooms" :key="room.name + room.address">
-                <a :href="mapsSearchURL(room.name + ' ' + room.address)" target="_blank" rel="noopener"
-                  class="code-card block">
+                <div class="code-card hover:transform-none hover:shadow-sm">
                   <span class="min-w-0 text-left">
                     <span class="code-card-title block truncate" x-text="room.name"></span>
                     <span class="code-card-desc block" x-text="room.address || 'Dirección no disponible'"></span>
@@ -229,13 +230,14 @@
                       <span x-text="room.positions + ' posiciones'"></span>
                     </span>
                   </span>
-                  <span class="code-card-icon flex-shrink-0">
+                  <a :href="mapsSearchURL(room.name + ' ' + room.address)" target="_blank" rel="noopener"
+                    class="code-card-icon flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity" title="Ver en el mapa">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                       <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                     </svg>
-                  </span>
-                </a>
+                  </a>
+                </div>
               </template>
             </div>
           </section>
