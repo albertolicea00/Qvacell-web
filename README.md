@@ -6,7 +6,7 @@
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)
 [![WiFi rooms sync](https://github.com/albertolicea00/CubaCellConnect-web/actions/workflows/wifi-rooms-sync-check.yml/badge.svg)](https://github.com/albertolicea00/CubaCellConnect-web/actions/workflows/wifi-rooms-sync-check.yml)
 
-Landing page + web USSD dialer for the [Qvacell](https://github.com/albertolicea00/Qvacell-ios) iOS app. No build step.
+Landing page + web USSD dialer for the Qvacell app, available on [iOS](https://github.com/albertolicea00/Qvacell-ios) and [Android](https://github.com/albertolicea00/Qvacell-apk). No build step.
 
 [Mira la versión en español](README.es.md)
 
@@ -44,7 +44,7 @@ On iOS Safari (detected via UA / `MacIntel` + multi-touch, not standalone yet), 
 
 ## Offline support
 
-`dial.html` does not ship its own copy of the catalog — it always pulls the latest `codes.json` straight from the main [Qvacell repository](https://github.com/albertolicea00/Qvacell-ios) (the exact file bundled by the iOS app):
+`dial.html` does not ship its own copy of the catalog — it always pulls the latest `codes.json` straight from the main [Qvacell iOS repository](https://github.com/albertolicea00/Qvacell-ios) (the exact file bundled by both the iOS and [Android](https://github.com/albertolicea00/Qvacell-apk) apps — a [cross-platform sync check](https://github.com/albertolicea00/Qvacell-ios/blob/main/ARCHITECTURE.md#14-cross-platform-catalog-sync-check) keeps the two in agreement):
 
 ```
 https://raw.githubusercontent.com/albertolicea00/Qvacell-ios/refs/heads/main/Qvacell/codes.json
@@ -84,9 +84,11 @@ Accents (section badges, primary buttons, the step-number circles, the hero's "d
 
 ## More Apps
 
-Other USSD-code apps by the same author:
+Other apps by the same author:
 
-- [Banca Remota](https://bancaremota.vercel.app/) — landing page + web dialer for the Banca Remota the Unofficial iOS alternative to Cuba’s mobile Banking apps.
+- **LlamaCon99** — Cross-platform app for calling Cuban numbers using the 99 prefix and identifying incoming 99 calls using your own contacts. iOS & Android
+- [Banca Remota](https://github.com/albertolicea00/BancaRemota) — Unofficial iOS alternative to Cuba's mobile banking apps.
+- **Casero.cu** — Native clients for Cuban lodging hosts to submit guest reports to the official portal. iOS · Android
 
 ## Contributing
 

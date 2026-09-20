@@ -82,9 +82,11 @@ Coincide con la paleta de colores de la app iOS (azul marino `rgb(0, 0, 102)`, c
 
 ## Más Aplicaciones
 
-Otras aplicaciones de códigos USSD del mismo autor:
+Otras aplicaciones del mismo autor:
 
-- [Banca Remota](https://bancaremota.vercel.app/) — página de destino + marcador web para la alternativa no oficial para iOS a las apps bancarias de Cuba.
+- **LlamaCon99** — App multiplataforma para llamar a números cubanos usando el prefijo 99 e identificar llamadas 99 entrantes usando tus propios contactos. iOS y Android
+- [Banca Remota](https://github.com/albertolicea00/BancaRemota) — Alternativa no oficial para iOS a las apps bancarias móviles de Cuba.
+- **Casero.cu** — Clientes nativos para arrendadores cubanos que necesitan reportar huéspedes al portal oficial. iOS · Android
 
 ## Contribuir
 
