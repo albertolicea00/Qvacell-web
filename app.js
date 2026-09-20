@@ -15,8 +15,12 @@ function app() {
         a: 'Sí. Entra a <a href="dial.html" class="text-navy dark:text-accent underline hover:no-underline">/dial</a> — el marcador USSD corriendo directo en el navegador. Agrégalo a tu pantalla de inicio y funciona incluso sin internet: después de la primera visita, la página y el catálogo de códigos quedan guardados en el propio navegador.'
       },
       {
-        q: '¿Por qué el saldo se muestra solo en <strong>Android</strong> pero no en <strong>iPhone</strong>?',
+        q: '¿Por qué el saldo se muestra solo en Android pero no en iPhone?',
         a: 'En <strong>Android</strong>, la aplicación puede leer la respuesta de los códigos USSD y mostrarla directamente en la interfaz. En <strong>iPhone</strong>, <strong>iOS</strong> no permite a las aplicaciones de terceros acceder a las respuestas USSD por sus restricciones de seguridad. Por eso, en <strong>iOS</strong> el código se prepara y se abre la aplicación Teléfono para que puedas consultar la respuesta oficial de ETECSA.'
+      },
+      {
+        q: '¿Cómo funciona el identificador de cobro revertido (*99) en cada sistema?',
+        a: 'En <strong>iOS</strong>, el nombre del contacto aparece directamente en la pantalla de llamada entrante. En <strong>Android</strong>, la API del sistema no permite modificar la pantalla de llamada nativa a menos que configures nuestra app como tu marcador predeterminado. Como nos parece demasiado invasivo pedirte que reemplaces tu app de Teléfono principal solo por esta función, en <strong>Android</strong> el nombre se mostrará cómodamente a través de una <strong>notificación emergente</strong> al recibir la llamada.'
       },
       {
         q: '¿El identificador de llamadas reconoce automáticamente quién me llama?',
