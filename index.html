@@ -84,7 +84,6 @@
         <a href="#features" class="nav-link">Funciones</a>
         <a href="/dial.html" class="nav-link">Marcador USSD</a>
         <a href="/zonas.html" class="nav-link">Zonas WiFi</a>
-        <a href="#limitations" class="nav-link">Limitaciones</a>
       </div>
 
       <div class="flex items-center gap-3">
@@ -138,8 +137,6 @@
           class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Marcador USSD</a>
         <a href="/zonas.html" @click="mobileMenuOpen = false"
           class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Zonas WiFi</a>
-        <a href="#limitations" @click="mobileMenuOpen = false"
-          class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Limitaciones</a>
         <div class="pt-2 pb-3 flex items-center px-3">
           <svg class="w-5 h-5 text-gray-900 dark:text-white" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -524,112 +521,6 @@
       </div>
     </section>
 
-    <!-- ════════════════════════════════════════
-         LIMITACIONES CONOCIDAS
-    ════════════════════════════════════════ -->
-    <section id="limitations" class="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900 relative">
-      <div class="absolute inset-0 pointer-events-none" aria-hidden="true" style="z-index: 999;">
-        <div class="absolute top-0 right-0 w-72 h-72 rounded-full bg-navy opacity-[0.06] dark:opacity-[0.07] blur-[110px]"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-accent opacity-[0.05] dark:opacity-[0.05] blur-[110px]"></div>
-        <div class="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-navy opacity-[0.06] dark:opacity-[0.06] blur-[110px]"></div>
-      </div>
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-16">
-          <span class="section-badge">Transparencia</span>
-          <h2 class="section-title">Limitaciones</h2>
-          <p class="section-subtitle">Aspectos técnicos del sistema operativo iOS y la red que debes conocer.</p>
-        </div>
-
-        <div class="space-y-4">
-          
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm">
-            <div class="flex items-start gap-4">
-              <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              </div>
-              <div>
-                <h4 class="font-bold text-gray-900 dark:text-white text-base">Directorio de base de datos no integrado con Caller ID (*99)</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">
-                  La base de datos del directorio telefónico se mantiene separada del identificador de llamadas CallKit, el cual solo carga contactos del dispositivo. iOS impone un límite estricto de entradas en las extensiones de identificación (máximo 100k–200k), mientras que el directorio cuenta con millones de registros.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm">
-            <div class="flex items-start gap-4">
-              <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              </div>
-              <div>
-                <h4 class="font-bold text-gray-900 dark:text-white text-base">Sin opciones de llamada por VoIP (WhatsApp/Teams) en Contactos</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">
-                  La pestaña de Contactos ofrece únicamente acciones sobre la red celular (llamada normal, cobro revertido <code class="code-inline">*99</code>, privada <code class="code-inline">#31#</code>). Aplicaciones como WhatsApp o Teams manejan su propio protocolo VoIP sin exponer APIs públicas para iniciar llamadas de forma directa desde apps de terceros.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm">
-            <div class="flex items-start gap-4">
-              <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              </div>
-              <div>
-                <h4 class="font-bold text-gray-900 dark:text-white text-base">Sandbox de iOS y límites de USSD (sin saldo en tiempo real en la UI)</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">
-                  A diferencia de Android, la seguridad del sandbox de iOS impide que aplicaciones de terceros lean o analicen diálogos de respuesta USSD en segundo plano. La app abre la app Teléfono nativa (<code class="code-inline">tel://</code>) donde el usuario ve directamente la respuesta enviada por ETECSA.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm">
-            <div class="flex items-start gap-4">
-              <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              </div>
-              <div>
-                <h4 class="font-bold text-gray-900 dark:text-white text-base">Sin widgets para pantalla de inicio</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">
-                  Las extensiones WidgetKit de iOS no tienen permitido invocar URLs del esquema <code class="code-inline">tel://</code> (<code class="code-inline">APPLICATION_EXTENSION_API_ONLY</code>). Un widget no puede marcar ni iniciar llamadas de manera directa, por lo que se descartó incluirlo.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm">
-            <div class="flex items-start gap-4">
-              <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              </div>
-              <div>
-                <h4 class="font-bold text-gray-900 dark:text-white text-base">Dispositivos con Dual SIM física</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">
-                  iOS no proporciona una API pública para seleccionar por qué línea se realiza la llamada <code class="code-inline">tel://</code>. En iPhones con doble SIM física (modelos de China/Hong Kong), la llamada sale por la línea configurada por defecto en los Ajustes del sistema.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm">
-            <div class="flex items-start gap-4">
-              <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 shrink-0">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              </div>
-              <div>
-                <h4 class="font-bold text-gray-900 dark:text-white text-base">Sin soporte para iPadOS ni watchOS</h4>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">
-                  Apple bloquea completamente la ejecución de códigos USSD en iPadOS y watchOS, incluso en modelos con conectividad Cellular, al carecer de la aplicación nativa de Teléfono completa.
-                </p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
         <!-- ════════════════════════════════════════
          APPS SIMILARES
     ════════════════════════════════════════ -->
@@ -924,7 +815,7 @@
             <li><a href="#features" class="footer-link">Funciones</a></li>
             <li><a href="#catalog" class="footer-link">Catálogo de códigos</a></li>
             <li><a href="#faq" class="footer-link">FAQ</a></li>
-            <li><a href="#limitations" class="footer-link">Limitaciones</a></li>
+            <li></li>
           </ul>
         </div>
 

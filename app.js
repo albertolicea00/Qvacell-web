@@ -11,10 +11,6 @@ function app() {
         a: 'No. Qvacell no usa internet en ningún momento. Todo funciona mediante códigos USSD sobre la red telefónica de ETECSA, igual que cuando marcas el código manualmente en el teléfono.'
       },
       {
-        q: '¿Es segura la app?',
-        a: 'Sí. No hay red, servidores ni cuentas — el catálogo completo de códigos viaja embebido en la propia app. No se recopila ningún dato. El código es open source: puedes revisarlo tú mismo en <a href="https://github.com/albertolicea00/Qvacell-ios" target="_blank" rel="noopener" class="text-navy dark:text-accent underline">GitHub</a>.'
-      },
-      {
         q: '¿Cuándo estará en la App Store?',
         a: 'Actualmente está en beta — solo disponible instalando desde el código fuente en GitHub. <button onclick="window.dispatchEvent(new CustomEvent(\'notify:open\'))" class="text-navy dark:text-accent underline cursor-pointer">Suscríbete</button> para recibir una notificación en cuanto se publique.'
       },
@@ -27,13 +23,29 @@ function app() {
         a: 'Cero. Es un proyecto de comunidad, sin anuncios ni compras dentro de la app.'
       },
       {
-        q: '¿La app realiza las operaciones por mí?',
-        a: 'No. La app solo abre el marcador del iPhone con el código USSD correcto preescrito (el <code class="code-inline">#</code> va correctamente codificado). Tú confirmas la llamada y ETECSA responde por la red telefónica. Es un lanzador de códigos, no un bot.'
+        q: '¿Por qué no se muestra mi saldo directamente en la interfaz de la app?',
+        a: 'Tanto en iOS por sus fuertes restricciones de seguridad (sandbox), como en las versiones modernas de Android, las apps de terceros tienen prohibido leer silenciosamente los diálogos de respuesta USSD. Por ello, la app solo preescribe el código y abre tu app nativa de Teléfono, donde ves la respuesta oficial de ETECSA.'
       },
       {
-        q: '¿Puedo contribuir al proyecto?',
-        a: 'Sí. Mira <code class="code-inline">CONTRIBUTING.md</code> en el repositorio. Issues, PRs y commits deben estar en inglés, aunque la UI de la app está en español.'
+        q: '¿El identificador de llamadas reconoce automáticamente quién me llama?',
+        a: 'No. El directorio telefónico de la app se mantiene separado del identificador de llamadas del sistema. Tanto iOS como Android imponen límites estrictos o políticas de privacidad que impiden inyectar millones de registros de la guía telefónica directamente en los contactos de tu teléfono.'
       },
+      {
+        q: '¿Por qué no hay opciones para llamar por WhatsApp o Telegram?',
+        a: 'La app ofrece únicamente operaciones sobre la red celular tradicional (llamada normal, cobro revertido <code class="code-inline">*99</code>, llamada privada <code class="code-inline">#31#</code>). Aplicaciones de VoIP como WhatsApp manejan su propio protocolo cerrado sin exponer APIs para iniciarlas desde nuestro marcador.'
+      },
+      {
+        q: '¿Qué pasa si tengo un dispositivo con Dual SIM?',
+        a: 'En iOS no existe una forma para que una app elija por qué línea enviar un código USSD, así que la llamada saldrá por tu línea configurada por defecto. En Android, la app nativa de llamadas interceptará el código y, dependiendo de tu configuración, usará la predeterminada o te preguntará qué SIM usar.'
+      },
+      {
+        q: '¿Tienen widgets para la pantalla de inicio?',
+        a: 'No. En iOS, las políticas prohíben estrictamente iniciar llamadas o ejecutar códigos USSD directamente desde un widget. Para mantener la experiencia segura y unificada en ambas plataformas, todas las operaciones requieren entrar a la app.'
+      },
+      {
+        q: '¿Funciona en tablets o relojes inteligentes?',
+        a: 'En general, no. Apple bloquea completamente la ejecución de códigos USSD en iPadOS y watchOS, incluso en modelos con conectividad Cellular. En el ecosistema Android, las tablets sin SIM o smartwatches sin aplicación de Teléfono nativa tampoco podrán realizar las operaciones.'
+      }
     ],
     init() {
       this.$watch('darkMode', val => localStorage.setItem('darkMode', val));
