@@ -272,6 +272,11 @@
             <p class="text-xs text-gray-400 dark:text-gray-500 mt-1" x-show="matchingOtherProvinces.length > 0">
               Encontrado en: <span x-text="matchingOtherProvinces.join(', ')"></span>.
             </p>
+            <p class="text-xs text-gray-400 dark:text-gray-500 mt-5" x-show="matchingOtherProvinces.length === 0">
+              ¿Falta alguna sala o zona? Repórtalo en
+              <a href="https://github.com/albertolicea00/Qvacell-ios/issues" target="_blank" rel="noopener"
+                class="text-navy dark:text-accent underline hover:no-underline">GitHub</a>
+            </p>
           </div>
         </div>
       </template>
