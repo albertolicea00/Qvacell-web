@@ -299,18 +299,15 @@
   <nav aria-label="Seleccionar categoría"
     class="tab-bar md:hidden fixed bottom-0 inset-x-0 z-50 flex bg-white/90 dark:bg-gray-950/90 backdrop-blur-md border-t border-gray-100 dark:border-gray-800">
     <template x-for="cat in categories" :key="cat.id">
-      <button @click="activeCategory = cat.id" type="button" class="flex-1 flex flex-col items-center justify-center py-2 gap-1">
+      <button @click="activeCategory = cat.id" type="button" class="flex-1 flex flex-col items-center justify-center py-3">
         <span class="tab-icon-pill relative" :class="activeCategory === cat.id ? 'bg-navy/15 dark:bg-accent/20' : ''">
           <span x-show="query.trim() && categoryVisible(cat) && activeCategory !== cat.id" 
                 class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-yellow-500 rounded-full border border-white dark:border-[rgb(12,16,26)]"></span>
-          <svg class="w-4 h-4 transition-opacity" :class="activeCategory === cat.id ? 'text-navy dark:text-accent opacity-100' : 'text-gray-400 opacity-70'"
+          <svg class="w-5 h-5 transition-opacity" :class="activeCategory === cat.id ? 'text-navy dark:text-accent opacity-100' : 'text-gray-400 opacity-70'"
              fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.75">
             <path stroke-linecap="round" stroke-linejoin="round" :d="categoryIconPath(cat.icon)" />
           </svg>
         </span>
-        <span class="text-[0.65rem] font-bold text-center leading-tight px-1"
-          :class="activeCategory === cat.id ? 'text-navy dark:text-accent' : 'text-gray-400 dark:text-gray-500'"
-          x-text="cat.name"></span>
       </button>
     </template>
   </nav>
