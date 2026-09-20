@@ -16,22 +16,22 @@ function app() {
       },
       {
         q: '¿Puedo usar Qvacell sin instalar la app?',
-        a: 'Sí. Entra a <a href="dial.html" class="text-navy dark:text-accent underline hover:no-underline">/dial</a> — el marcador USSD corriendo directo en el navegador, sin Xcode ni cuenta de desarrollador. Agrégalo a tu pantalla de inicio y funciona incluso sin internet: después de la primera visita, la página y el catálogo de códigos quedan guardados en el propio navegador.'
+        a: 'Sí. Entra a <a href="dial.html" class="text-navy dark:text-accent underline hover:no-underline">/dial</a> — el marcador USSD corriendo directo en el navegador. Agrégalo a tu pantalla de inicio y funciona incluso sin internet: después de la primera visita, la página y el catálogo de códigos quedan guardados en el propio navegador.'
       },
       {
         q: '¿Cuánto cuesta la app?',
-        a: 'Cero. Es un proyecto de comunidad, sin anuncios ni compras dentro de la app.'
+        a: 'Cero. Que bastante caro te salió ya el teléfono como para seguir gastando.'
       },
       {
-        q: '¿Por qué no se muestra mi saldo directamente en la interfaz de la app?',
-        a: 'Tanto en iOS por sus fuertes restricciones de seguridad (sandbox), como en las versiones modernas de Android, las apps de terceros tienen prohibido leer silenciosamente los diálogos de respuesta USSD. Por ello, la app solo preescribe el código y abre tu app nativa de Teléfono, donde ves la respuesta oficial de ETECSA.'
+        q: '¿Por qué el saldo se muestra solo en Android pero no en iPhone?',
+        a: 'En Android, la aplicación puede leer la respuesta de los códigos USSD y mostrarla directamente en la interfaz. En iPhone, iOS no permite a las aplicaciones de terceros acceder a las respuestas USSD por sus restricciones de seguridad. Por eso, en iOS el código se prepara y se abre la aplicación Teléfono para que puedas consultar la respuesta oficial de ETECSA.'
       },
       {
         q: '¿El identificador de llamadas reconoce automáticamente quién me llama?',
         a: 'No. El directorio telefónico de la app se mantiene separado del identificador de llamadas del sistema. Tanto iOS como Android imponen límites estrictos o políticas de privacidad que impiden inyectar millones de registros de la guía telefónica directamente en los contactos de tu teléfono.'
       },
       {
-        q: '¿Por qué no hay opciones para llamar por WhatsApp o Telegram?',
+        q: '¿Por qué no hay opciones para llamar directo como en WhatsApp o Telegram?',
         a: 'La app ofrece únicamente operaciones sobre la red celular tradicional (llamada normal, cobro revertido <code class="code-inline">*99</code>, llamada privada <code class="code-inline">#31#</code>). Aplicaciones de VoIP como WhatsApp manejan su propio protocolo cerrado sin exponer APIs para iniciarlas desde nuestro marcador.'
       },
       {
