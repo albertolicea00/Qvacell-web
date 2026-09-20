@@ -84,6 +84,7 @@
         <a href="#features" class="nav-link">Funciones</a>
         <a href="/dial.html" class="nav-link">Marcador USSD</a>
         <a href="/zonas.html" class="nav-link">Zonas WiFi</a>
+        <a href="#faq" class="nav-link">FAQ</a>
       </div>
 
       <div class="flex items-center gap-3">
@@ -109,7 +110,7 @@
           </svg>
           <a href="https://github.com/albertolicea00/Qvacell-ios" target="_blank" rel="noopener" class="text-gray-900 dark:text-white hover:text-navy dark:hover:text-accent font-medium">iOS</a>
           <span class="text-gray-400">·</span>
-          <a href="https://github.com/albertolicea00/Qvacell-android" target="_blank" rel="noopener" class="text-gray-900 dark:text-white hover:text-navy dark:hover:text-accent font-medium">Android</a>
+          <a href="https://github.com/albertolicea00/Qvacell-apk" target="_blank" rel="noopener" class="text-gray-900 dark:text-white hover:text-navy dark:hover:text-accent font-medium">Android</a>
           <span class="ml-1 text-gray-500" x-text="githubStars !== null ? '★ ' + githubStars : ''"></span>
         </div>
 
@@ -137,6 +138,8 @@
           class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Marcador USSD</a>
         <a href="/zonas.html" @click="mobileMenuOpen = false"
           class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">Zonas WiFi</a>
+        <a href="#faq" @click="mobileMenuOpen = false"
+          class="block px-3 py-3 rounded-xl text-base font-medium text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800">FAQ</a>
         <div class="pt-2 pb-3 flex items-center px-3">
           <svg class="w-5 h-5 text-gray-900 dark:text-white" fill="currentColor" viewBox="0 0 24 24">
             <path
@@ -144,7 +147,7 @@
           </svg>
           <a href="https://github.com/albertolicea00/Qvacell-ios" target="_blank" rel="noopener" class="ml-2 text-base font-medium text-gray-900 dark:text-white hover:text-navy dark:hover:text-accent">iOS</a>
           <span class="mx-2 text-gray-400">·</span>
-          <a href="https://github.com/albertolicea00/Qvacell-android" target="_blank" rel="noopener" class="text-base font-medium text-gray-900 dark:text-white hover:text-navy dark:hover:text-accent">Android</a>
+          <a href="https://github.com/albertolicea00/Qvacell-apk" target="_blank" rel="noopener" class="text-base font-medium text-gray-900 dark:text-white hover:text-navy dark:hover:text-accent">Android</a>
           <span class="ml-auto text-gray-500 font-medium" x-text="githubStars !== null ? '★ ' + githubStars : ''"></span>
         </div>
       </div>
@@ -196,7 +199,7 @@
         <p class="text-sm text-gray-500 dark:text-white/40 mb-8">
           <a href="https://github.com/albertolicea00/Qvacell-ios" target="_blank" rel="noopener" class="hover:text-navy dark:hover:text-accent transition-colors font-medium underline underline-offset-2">iOS</a> 
           &nbsp;·&nbsp;
-          <a href="https://github.com/albertolicea00/Qvacell-android" target="_blank" rel="noopener" class="hover:text-navy dark:hover:text-accent transition-colors font-medium underline underline-offset-2">Android</a>
+          <a href="https://github.com/albertolicea00/Qvacell-apk" target="_blank" rel="noopener" class="hover:text-navy dark:hover:text-accent transition-colors font-medium underline underline-offset-2">Android</a>
         </p>
 
         <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8">
@@ -348,7 +351,27 @@
 
       </div>
 
-</section>
+      <!-- Cómo opera la red -->
+      <div class="max-w-6xl mx-auto mt-8 px-0">
+        <div class="bg-navy/5 dark:bg-accent/10 rounded-2xl p-6 border border-navy/20 dark:border-accent/30">
+          <div class="flex items-start gap-4">
+            <div class="p-2.5 rounded-xl bg-navy/10 dark:bg-accent/20 text-navy dark:text-accent shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01M4.929 12.929a10 10 0 0114.142 0M1.5 9.5a14.5 14.5 0 0121 0"/></svg>
+            </div>
+            <div class="space-y-2 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+              <h4 class="font-bold text-base text-gray-900 dark:text-white">¿Cómo opera la red de ETECSA?</h4>
+              <p>
+                ETECSA usa <strong class="text-navy dark:text-accent font-semibold">2G (GSM) en 900 MHz</strong> en todo el país, <strong class="text-navy dark:text-accent font-semibold">3G (UMTS)</strong> en 900 MHz al aire libre y 2100 MHz en zonas críticas/interiores, y <strong class="text-navy dark:text-accent font-semibold">4G (LTE)</strong> en la banda B3 (1800 MHz) en ciudades y la banda B28 (700 MHz) en zonas rurales. Un USSD como <code class="code-inline">*222#</code> solo necesita señal de voz 2G/3G — no depende de tener datos móviles activos.
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                Fuente: <a href="https://www.directoriocubano.info/noticias/ciencia-tecnologia/datos-moviles-en-cuba-redes-y-frecuencias-oficiales/" target="_blank" rel="noopener" class="underline hover:text-navy dark:hover:text-accent">Directorio Cubano</a> — verifica si tu equipo soporta estas bandas en <a href="https://www.kimovil.com/es/frequency-checker/CU" target="_blank" rel="noopener" class="underline hover:text-navy dark:hover:text-accent">Kimovil Frequency Checker (Cuba)</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
 
     <!-- ════════════════════════════════════════
          INSTALACIÓN IDENTIFICADOR *99
@@ -769,7 +792,7 @@
           <br>
           <a href="https://github.com/albertolicea00/Qvacell-ios" target="_blank" rel="noopener" class="hover:text-navy dark:hover:text-accent transition-colors font-medium underline underline-offset-2">iOS</a>
           &nbsp;·&nbsp;
-          <a href="https://github.com/albertolicea00/Qvacell-android" target="_blank" rel="noopener" class="hover:text-navy dark:hover:text-accent transition-colors font-medium underline underline-offset-2">Android</a>
+          <a href="https://github.com/albertolicea00/Qvacell-apk" target="_blank" rel="noopener" class="hover:text-navy dark:hover:text-accent transition-colors font-medium underline underline-offset-2">Android</a>
         </div>
       </div>
     </section>
@@ -852,7 +875,7 @@
             </svg>
             GitHub (iOS)
           </a>
-          <a href="https://github.com/albertolicea00/Qvacell-android" target="_blank" rel="noopener"
+          <a href="https://github.com/albertolicea00/Qvacell-apk" target="_blank" rel="noopener"
             class="w-full inline-flex items-center justify-center gap-2 bg-gray-900 dark:bg-white/10 hover:bg-gray-800 dark:hover:bg-white/20 text-white font-semibold px-4 py-2.5 rounded-xl transition-all text-sm">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
               <path
@@ -933,7 +956,7 @@
               </a>
             </li>
             <li>
-              <a href="https://github.com/albertolicea00/Qvacell-android" target="_blank" rel="noopener"
+              <a href="https://github.com/albertolicea00/Qvacell-apk" target="_blank" rel="noopener"
                 class="footer-link flex items-center gap-2">
                 <svg class="w-4 h-4 text-navy dark:text-accent" fill="currentColor" viewBox="0 0 24 24">
                   <path
