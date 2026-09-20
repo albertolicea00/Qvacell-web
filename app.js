@@ -11,24 +11,16 @@ function app() {
         a: 'No. Qvacell no usa internet en ningún momento. Todo funciona mediante códigos USSD sobre la red telefónica de ETECSA, igual que cuando marcas el código manualmente en el teléfono.'
       },
       {
-        q: '¿Cuándo estará en la App Store?',
-        a: 'Actualmente está en beta — solo disponible instalando desde el código fuente en GitHub. <button onclick="window.dispatchEvent(new CustomEvent(\'notify:open\'))" class="text-navy dark:text-accent underline cursor-pointer">Suscríbete</button> para recibir una notificación en cuanto se publique.'
-      },
-      {
         q: '¿Puedo usar Qvacell sin instalar la app?',
         a: 'Sí. Entra a <a href="dial.html" class="text-navy dark:text-accent underline hover:no-underline">/dial</a> — el marcador USSD corriendo directo en el navegador. Agrégalo a tu pantalla de inicio y funciona incluso sin internet: después de la primera visita, la página y el catálogo de códigos quedan guardados en el propio navegador.'
       },
       {
-        q: '¿Cuánto cuesta la app?',
-        a: 'Cero. Que bastante caro te salió ya el teléfono como para seguir gastando.'
-      },
-      {
-        q: '¿Por qué el saldo se muestra solo en Android pero no en iPhone?',
-        a: 'En Android, la aplicación puede leer la respuesta de los códigos USSD y mostrarla directamente en la interfaz. En iPhone, iOS no permite a las aplicaciones de terceros acceder a las respuestas USSD por sus restricciones de seguridad. Por eso, en iOS el código se prepara y se abre la aplicación Teléfono para que puedas consultar la respuesta oficial de ETECSA.'
+        q: '¿Por qué el saldo se muestra solo en <strong>Android</strong> pero no en <strong>iPhone</strong>?',
+        a: 'En <strong>Android</strong>, la aplicación puede leer la respuesta de los códigos USSD y mostrarla directamente en la interfaz. En <strong>iPhone</strong>, <strong>iOS</strong> no permite a las aplicaciones de terceros acceder a las respuestas USSD por sus restricciones de seguridad. Por eso, en <strong>iOS</strong> el código se prepara y se abre la aplicación Teléfono para que puedas consultar la respuesta oficial de ETECSA.'
       },
       {
         q: '¿El identificador de llamadas reconoce automáticamente quién me llama?',
-        a: 'No. El directorio telefónico de la app se mantiene separado del identificador de llamadas del sistema. Tanto iOS como Android imponen límites estrictos o políticas de privacidad que impiden inyectar millones de registros de la guía telefónica directamente en los contactos de tu teléfono.'
+        a: 'No. El directorio telefónico de la app se mantiene separado del identificador de llamadas del sistema. Tanto <strong>iOS</strong> como <strong>Android</strong> imponen límites estrictos o políticas de privacidad que impiden inyectar millones de registros de la guía telefónica directamente en los contactos de tu teléfono.'
       },
       {
         q: '¿Por qué no hay opciones para llamar directo como en WhatsApp o Telegram?',
@@ -36,16 +28,24 @@ function app() {
       },
       {
         q: '¿Qué pasa si tengo un dispositivo con Dual SIM?',
-        a: 'En iOS no existe una forma para que una app elija por qué línea enviar un código USSD, así que la llamada saldrá por tu línea configurada por defecto. En Android, la app nativa de llamadas interceptará el código y, dependiendo de tu configuración, usará la predeterminada o te preguntará qué SIM usar.'
+        a: 'En <strong>iOS</strong> no existe una forma para que una app elija por qué línea enviar un código USSD, así que la llamada saldrá por tu línea configurada por defecto. En <strong>Android</strong>, puedes configurar el teléfono para usar una SIM predeterminada o seleccionar cuál usar.'
       },
       {
         q: '¿Tienen widgets para la pantalla de inicio?',
-        a: 'No. En iOS, las políticas prohíben estrictamente iniciar llamadas o ejecutar códigos USSD directamente desde un widget. Para mantener la experiencia segura y unificada en ambas plataformas, todas las operaciones requieren entrar a la app.'
+        a: 'Sí, en <strong>Android</strong> puedes usar widgets de marcado rápido. Sin embargo, en <strong>iOS</strong> las políticas de seguridad de Apple prohíben estrictamente iniciar llamadas o ejecutar códigos USSD directamente desde un widget, por lo que en <strong>iPhone</strong> las operaciones siempre requerirán entrar a la app.'
       },
       {
         q: '¿Funciona en tablets o relojes inteligentes?',
-        a: 'En general, no. Apple bloquea completamente la ejecución de códigos USSD en iPadOS y watchOS, incluso en modelos con conectividad Cellular. En el ecosistema Android, las tablets sin SIM o smartwatches sin aplicación de Teléfono nativa tampoco podrán realizar las operaciones.'
-      }
+        a: 'En general, no. Apple bloquea completamente la ejecución de códigos USSD en iPadOS y watchOS, incluso en modelos con conectividad Cellular. En el ecosistema <strong>Android</strong>, las tablets sin SIM o smartwatches sin aplicación de Teléfono nativa tampoco podrán realizar las operaciones.'
+      },
+      {
+        q: '¿Cuándo estará en la App Store y Play Store?',
+        a: 'Actualmente está en revisión de las tiendas — solo disponible instalando desde el código fuente en GitHub. <button onclick="window.dispatchEvent(new CustomEvent(\'notify:open\'))" class="text-navy dark:text-accent underline cursor-pointer">Suscríbete</button> para recibir una notificación en cuanto se publique.'
+      },
+      {
+        q: '¿Cuánto cuesta la app?',
+        a: 'Cero. Que bastante caro te salió ya el teléfono como para seguir gastando.'
+      },
     ],
     init() {
       this.$watch('darkMode', val => localStorage.setItem('darkMode', val));
