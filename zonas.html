@@ -203,8 +203,12 @@
       <!-- Province selector -->
       <div class="w-full flex flex-wrap gap-2 pb-6 mb-2 mt-2" x-show="provinces.length > 0">
         <template x-for="p in provinces" :key="p.province">
-          <button type="button" @click="activeProvince = p.province" class="province-pill"
-            :class="activeProvince === p.province ? 'active' : ''" x-text="p.province"></button>
+          <button type="button" @click="activeProvince = p.province" class="province-pill relative"
+            :class="activeProvince === p.province ? 'active' : ''">
+            <span x-text="p.province"></span>
+            <span x-show="matchingOtherProvinces.includes(p.province)" 
+                  class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border border-white dark:border-[rgb(12,16,26)]"></span>
+          </button>
         </template>
       </div>
 
