@@ -43,10 +43,17 @@ function app() {
         }
       });
       window.addEventListener('notify:open', () => { this.notifyOpen = true; });
-      fetch('https://api.github.com/repos/albertolicea00/Qvacell-ios')
-        .then(r => r.json())
-        .then(d => { if (d.stargazers_count !== undefined) this.githubStars = d.stargazers_count; })
-        .catch(() => {});
+      Promise.all([
+        fetch('https://api.github.com/repos/albertolicea00/Qvacell-ios').then(r => r.json()),
+        fetch('https://api.github.com/repos/albertolicea00/Qvacell-android').then(r => r.json())
+      ])
+      .then(([ios, android]) => {
+        let count = 0;
+        if (ios.stargazers_count !== undefined) count += ios.stargazers_count;
+        if (android.stargazers_count !== undefined) count += android.stargazers_count;
+        if (count > 0) this.githubStars = count;
+      })
+      .catch(() => {});
     }
   }
 }
