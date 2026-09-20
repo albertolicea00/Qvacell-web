@@ -4,21 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Qvacell — Códigos USSD de ETECSA desde tu iPhone</title>
+  <title>Qvacell — Operaciones de ETECSA desde tu móvil</title>
   <meta name="description"
-    content="App nativa para iPhone que simplifica el uso de los códigos USSD de ETECSA (Cubacel): saldo, paquetes, transferencias y más. Sin internet." />
+    content="App para iOS y Android que simplifica el uso de los códigos USSD de ETECSA (Cubacel): saldo, paquetes, transferencias y más. Sin internet." />
   <meta name="theme-color" content="#000066" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="apple-touch-icon" href="assets/icon-black.svg" />
 
   <!-- Open Graph & Twitter -->
-  <meta property="og:title" content="Qvacell — Códigos USSD de ETECSA desde tu iPhone" />
+  <meta property="og:title" content="Qvacell — Operaciones de ETECSA desde tu móvil" />
   <meta property="og:description"
     content="Consulta saldo, compra paquetes y transfiere crédito en Cuba sin internet — todo por red telefónica." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/og-image.svg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Qvacell — Códigos USSD de ETECSA desde tu iPhone" />
+  <meta name="twitter:title" content="Qvacell — Operaciones de ETECSA desde tu móvil" />
   <meta name="twitter:description" content="Consulta saldo, compra paquetes y transfiere crédito sin internet." />
   <meta name="twitter:image" content="assets/og-image.svg" />
 
@@ -187,15 +187,15 @@
         </div>
 
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-5">
-          Códigos USSD de ETECSA<br />
-          <span class="gradient-text">desde tu iPhone</span>
+          Operaciones de ETECSA<br />
+          <span class="gradient-text">directo desde tu móvil</span>
         </h1>
 
         <p class="text-xl text-gray-600 dark:text-white/70 leading-relaxed mb-3">
           Consulta saldo, compra paquetes y transfiere crédito —
           <strong class="text-gray-900 dark:text-white">sin internet</strong>, directo por la red telefónica.
         </p>
-        <p class="text-sm text-gray-500 dark:text-white/40 mb-8">Cubacel (ETECSA) · iOS 17+ · Catálogo 100% local</p>
+        <p class="text-sm text-gray-500 dark:text-white/40 mb-8">Cubacel (ETECSA) · iOS y Android · Catálogo 100% local</p>
 
         <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8">
           <button @click="notifyOpen = true" class="btn-primary">
@@ -203,7 +203,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
-            Avísame cuando esté en App Store
+            Avísame cuando esté disponible
           </button>
           <a href="dial.html" class="btn-ghost">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -778,11 +778,11 @@
         <div
           class="inline-flex items-center gap-2 text-navy dark:text-accent text-xs font-semibold uppercase tracking-widest rounded-full px-4 py-1.5 mb-5">
           <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-          Pronto en App Store
+          Pronto en tiendas
         </div>
 
         <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Avísame cuando esté lista</h2>
-        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">La app está en fase beta y próximamente estará disponible en la App Store. 
+        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">La app está en fase beta y próximamente estará disponible en las tiendas de aplicaciones. 
           Déjanos tu correo y te avisaremos en cuanto se publique.</p>
 
         <!-- CTA Button -->
@@ -849,12 +849,12 @@
         <div
           class="inline-flex items-center gap-2 text-navy dark:text-accent text-xs font-semibold uppercase tracking-widest rounded-full px-3 py-1 mb-5">
           <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-          Pronto en App Store
+          Pronto en tiendas
         </div>
 
         <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Avísame cuando esté lista</h2>
         <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">La app está en beta. Déjanos tu correo
-          y serás el primero en saber cuando esté disponible en la App Store.</p>
+          y serás el primero en saber cuando esté disponible en las tiendas oficiales.</p>
 
         <div x-data="notifyForm()">
           <form @submit.prevent="submit()" class="flex flex-col gap-3">
@@ -873,7 +873,7 @@
           </form>
           <p x-show="error" x-text="error" x-transition class="text-red-500 dark:text-red-400 text-xs mt-2"></p>
           <p x-show="sent" x-transition class="text-accent text-xs mt-2 font-medium">¡Suscrito! Te avisaremos en cuanto
-            la app esté en la App Store.</p>
+            la app esté en las tiendas oficiales.</p>
         </div>
 
         <div class="flex items-center gap-3 my-5">
@@ -910,8 +910,8 @@
               class="w-8 h-8 rounded-lg shadow-sm hidden dark:block" />
             <span class="text-gray-900 dark:text-white font-bold text-lg">Qvacell</span>
           </div>
-          <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">App nativa para iPhone que simplifica
-            el acceso a los códigos USSD de ETECSA. Sin internet.</p>
+          <p class="text-sm leading-relaxed mb-4 text-gray-500 dark:text-gray-400">App que simplifica el acceso a los
+            códigos USSD de ETECSA. Sin internet.</p>
         </div>
 
         <div>
