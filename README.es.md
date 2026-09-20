@@ -1,6 +1,5 @@
 # 🇨🇺 Qvacell — Landing Page
 
-[![GitHub Stars](https://img.shields.io/github/stars/albertolicea00/Qvacell-ios?style=flat&logo=github&label=stars&color=000066)](https://github.com/albertolicea00/Qvacell-ios)
 ![HTML](https://img.shields.io/badge/HTML-E34F26?style=flat&logo=html5&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat&logo=alpinedotjs&logoColor=white)
