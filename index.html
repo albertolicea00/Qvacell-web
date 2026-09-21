@@ -74,16 +74,124 @@
       })(window, document, "clarity", "script", "ylc9r6pvxi");
   </script>
 
+  <!-- Structured data -->
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Qvacell",
-  "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "iOS, Android",
-  "description": "App para iOS y Android que simplifica el uso de los códigos USSD de ETECSA (Cubacel): saldo, paquetes, transferencias y más. Sin internet.",
-  "url": "https://qvacell.vercel.app/"
-}
+  {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    "name": "Qvacell",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "iOS, Android",
+    "description": "App para iOS y Android que simplifica el uso de los códigos USSD de ETECSA (Cubacel): saldo, paquetes, transferencias y más. Sin internet.",
+    "url": "https://qvacell.vercel.app/",
+    "image": "https://qvacell.vercel.app/assets/og-image.svg",
+    "author": {
+      "@type": "Person",
+      "name": "Alberto Licea",
+      "url": "https://github.com/albertolicea00"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "¿Necesito internet para usar la app?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Qvacell no usa internet en ningún momento. Todo funciona mediante códigos USSD sobre la red telefónica de ETECSA, igual que cuando marcas el código manualmente en el teléfono."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Puedo usar Qvacell sin instalar la app?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Entra a /dial — el marcador USSD corriendo directo en el navegador. Agrégalo a tu pantalla de inicio y funciona incluso sin internet: después de la primera visita, la página y el catálogo de códigos quedan guardados en el propio navegador."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Por qué el saldo se muestra solo en Android pero no en iPhone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "En Android, la aplicación puede leer la respuesta de los códigos USSD y mostrarla directamente en la interfaz. En iPhone, iOS no permite a las aplicaciones de terceros acceder a las respuestas USSD por sus restricciones de seguridad. Por eso, en iOS el código se prepara y se abre la aplicación Teléfono para que puedas consultar la respuesta oficial de ETECSA."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cómo funciona el identificador de cobro revertido (*99) en cada sistema?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "En iOS, el nombre del contacto aparece directamente en la pantalla de llamada entrante. En Android, la API del sistema no permite modificar la pantalla de llamada nativa a menos que configures nuestra app como tu marcador predeterminado. Como nos parece demasiado invasivo pedirte que reemplaces tu app de Teléfono principal solo por esta función, en Android el nombre se mostrará cómodamente a través de una notificación emergente al recibir la llamada."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿El identificador de llamadas reconoce automáticamente quién me llama?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. El directorio telefónico de la app se mantiene separado del identificador de llamadas del sistema. Tanto iOS como Android imponen límites estrictos o políticas de privacidad que impiden inyectar millones de registros de la guía telefónica directamente en los contactos de tu teléfono."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Por qué no hay opciones para llamar directo como en WhatsApp o Telegram?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La app ofrece únicamente operaciones sobre la red celular tradicional (llamada normal, cobro revertido *99, llamada privada #31#). Aplicaciones de VoIP como WhatsApp manejan su propio protocolo cerrado sin exponer APIs para iniciarlas desde nuestro marcador."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Qué pasa si tengo un dispositivo con Dual SIM?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "En iOS no existe una forma para que una app elija por qué línea enviar un código USSD, así que la llamada saldrá por tu línea configurada por defecto. En Android, puedes configurar el teléfono para usar una SIM predeterminada o seleccionar cuál usar."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Tienen widgets para la pantalla de inicio?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí, en Android puedes usar widgets de marcado rápido. Sin embargo, en iOS las políticas de seguridad de Apple prohíben estrictamente iniciar llamadas o ejecutar códigos USSD directamente desde un widget, por lo que en iPhone las operaciones siempre requerirán entrar a la app."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Funciona en tablets o relojes inteligentes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "En general, no. Apple bloquea completamente la ejecución de códigos USSD en iPadOS y watchOS, incluso en modelos con conectividad Cellular. En el ecosistema Android, las tablets sin SIM o smartwatches sin aplicación de Teléfono nativa tampoco podrán realizar las operaciones."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuándo estará en la App Store y Play Store?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Actualmente está en revisión de las tiendas — solo disponible instalando desde el código fuente en GitHub. Suscríbete para recibir una notificación en cuanto se publique."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "¿Cuánto cuesta la app?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Cero. Que bastante caro te salió ya el teléfono como para seguir gastando."
+        }
+      }
+    ]
+  }
   </script>
 </head>
 
