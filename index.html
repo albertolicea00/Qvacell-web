@@ -184,7 +184,8 @@
   <div x-data="{ hidden: false, lastY: 0 }"
     @scroll.window="const y = window.scrollY; hidden = y > lastY && y > 60; lastY = y"
     :class="hidden ? '-translate-y-full' : 'translate-y-0'"
-    class="fixed top-16 left-0 right-0 z-40 alert-box transition-transform duration-300">
+    class="fixed top-16 left-0 right-0 z-40 alert-box transition-transform duration-300"
+    style="margin: -.5em;">
     <div class="mx-auto max-w-6xl sm:px-6 lg:px-8">
       <p class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 leading-snug text-center">
         Esta aplicación no está afiliada, respaldada ni patrocinada por ETECSA.
@@ -207,7 +208,7 @@
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-accent opacity-[0.06] blur-[110px]"></div>
       </div>
 
-      <div class="relative max-w-3xl mx-auto text-center w-full my-auto py-4 flex flex-col items-center justify-center">
+      <div class="relative max-w-3xl mx-auto text-center w-full my-auto py-6 flex flex-col items-center justify-center">
 
         <div class="flex justify-center mb-6">
           <div class="relative">
