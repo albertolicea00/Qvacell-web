@@ -4,7 +4,6 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 ![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=flat&logo=alpinedotjs&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)
-[![Sincronización de salas WiFi](https://github.com/albertolicea00/CubaCellConnect-web/actions/workflows/wifi-rooms-sync-check.yml/badge.svg)](https://github.com/albertolicea00/CubaCellConnect-web/actions/workflows/wifi-rooms-sync-check.yml)
 
 Página de destino (landing page) + marcador USSD web para la aplicación iOS [Qvacell](https://github.com/albertolicea00/Qvacell-ios). Sin paso de compilación.
 
@@ -94,4 +93,4 @@ Consulta el [CONTRIBUTING.md](https://github.com/albertolicea00/Qvacell-ios/blob
 
 ---
 
-*Parte del proyecto [Qvacell](https://github.com/albertolicea00/Qvacell-ios) por [Alberto Licea](https://www.linkedin.com/in/albertolicea00).*
+*Parte del proyecto [Qvacell](https://github.com/albertolicea00/Qvacell-ios) por @albertolicea00*
