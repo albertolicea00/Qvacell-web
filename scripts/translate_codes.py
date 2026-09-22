@@ -1,6 +1,7 @@
-"""Adds/updates the `title_en`/`details_en`/`name_en`/`label_en` English-translation fields in
-codes.json (source of truth stays Spanish — see USSDCode.localizedTitle etc. in Models.swift,
-which pick the `_en` field on an English-language device and fall back to the Spanish original).
+"""Fills in the `en` side of codes.json's `title`/`details`/`name`/`label` fields, each shaped
+`{"es": "...", "en": "..."}` (source of truth stays Spanish — see LocalizedText.localized in
+Models.swift, which picks `en` on an English-language device and falls back to `es` when `en`
+is nil/untranslated).
 
 Re-run after adding new codes/groups to codes.json: any id/group/category name not covered here
 prints under "missing" instead of failing silently, so it's safe to run repeatedly. Add its
@@ -154,24 +155,24 @@ for cat in d["categories"]:
     if cat_en is None:
         missing_cats.append(cat["id"])
     else:
-        cat["name_en"] = cat_en
+        cat["name"]["en"] = cat_en
     for g in cat.get("groups", []):
         if g.get("name") is not None:
-            g_en = GROUP_NAMES.get(g["name"])
+            g_en = GROUP_NAMES.get(g["name"]["es"])
             if g_en is None:
-                missing_groups.append(g["name"])
+                missing_groups.append(g["name"]["es"])
             else:
-                g["name_en"] = g_en
+                g["name"]["en"] = g_en
         for c in g.get("codes", []):
             entry = CODES.get(c["id"])
             if entry is None:
                 missing_codes.append(c["id"])
             else:
-                c["title_en"], c["details_en"] = entry
+                c["title"]["en"], c["details"]["en"] = entry
             for v in c.get("variants") or []:
-                v_en = VARIANT_LABELS.get(v["label"])
+                v_en = VARIANT_LABELS.get(v["label"]["es"])
                 if v_en:
-                    v["label_en"] = v_en
+                    v["label"]["en"] = v_en
 
 print("missing categories:", missing_cats)
 print("missing groups:", missing_groups)

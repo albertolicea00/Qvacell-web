@@ -546,10 +546,28 @@
         inputValue: '',
         copiedId: null,
 
+        // As of codes.json v3, `title`/`details`/`name`/`label` are `{"es": "...", "en": "..."}`
+        // pairs (the iOS app picks one at runtime per device language) instead of plain strings.
+        // This site is Spanish-only (`<html lang="es">`, no language switcher), so it always
+        // wants `.es` — unwrap eagerly here rather than touching every template/search site below.
+        localize(value) {
+          return value && typeof value === 'object' ? (value.es ?? value.en ?? '') : (value ?? '');
+        },
+
         applyCodes(catalog) {
           // codes.json carries SMS codes under their own "sms" category directly — no
           // per-code type filtering needed here to separate them out.
           this.categories = JSON.parse(JSON.stringify(catalog.categories || []));
+          this.categories.forEach(cat => {
+            cat.name = this.localize(cat.name);
+            (cat.groups || []).forEach(group => {
+              if (group.name !== null && group.name !== undefined) group.name = this.localize(group.name);
+              (group.codes || []).forEach(code => {
+                code.title = this.localize(code.title);
+                code.details = this.localize(code.details);
+              });
+            });
+          });
 
           const allCodes = [];
           this.categories.forEach(cat => {
