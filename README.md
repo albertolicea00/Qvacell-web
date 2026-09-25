@@ -58,6 +58,15 @@ Net effect: after one successful online visit, the dialer (and the landing page)
 
 Two things to know when touching `sw.js`: bump `CACHE_NAME` whenever the precache list changes, or returning users keep serving the old cached shell; and cross-origin CDN URLs with no `Access-Control-Allow-Origin` header (like `cdn.tailwindcss.com`) must be cached via a manual `fetch()` + `cache.put()` with `mode: 'no-cors'` — `cache.add()`/`addAll()` throw on opaque responses by spec.
 
+## Known limitations
+
+**`tel:` links can silently fail to dial.** `dial.html`'s operation cards are plain `<a href="tel:<code>">` links ([dial.html:205](dial.html#L205)) — there's no JS layer to fix here, the failure happens in the wrapping browser/OS before the page gets involved:
+
+- **In-app browsers** (Instagram, Facebook, TikTok, WhatsApp, etc.) commonly strip or no-op custom URL schemes like `tel:` for security when a user opens the site from a link inside those apps. Tap does nothing, no error shown. Since this site links out to Facebook/Instagram/X, some traffic can plausibly land here through an in-app webview. No web-page-side fix exists other than detecting the in-app user agent and prompting the user to open the link in Safari/Chrome instead.
+- **iOS Safari's repeated-dialog throttling.** If `tel:` links are tapped several times in quick succession, iOS Safari can invoke its built-in guard against pages that repeatedly trigger prompts, offering to stop the page from opening further ones — after which subsequent taps stop prompting a call at all until the restriction is cleared. *Not independently verified on-device for this exact case and exact wording varies by iOS version* — flagging as a known/reported behavior rather than a confirmed spec.
+
+Neither is something this repo's code can bypass; both are platform-level restrictions by design.
+
 ## Local dev
 
 ```bash

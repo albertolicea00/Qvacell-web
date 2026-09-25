@@ -58,6 +58,15 @@ Efecto neto: tras una visita online exitosa, el marcador (y la página de destin
 
 Dos detalles a tener en cuenta al modificar `sw.js`: incrementa `CACHE_NAME` cada vez que cambie la lista de precarga, o los usuarios recurrentes seguirán sirviendo el cascarón antiguo cacheado; y las URLs CDN de origen cruzado sin cabecera `Access-Control-Allow-Origin` (como `cdn.tailwindcss.com`) deben ser cacheadas mediante un `fetch()` manual + `cache.put()` con `mode: 'no-cors'` — `cache.add()`/`addAll()` lanzan un error con respuestas opacas por especificación.
 
+## Limitaciones conocidas
+
+**Los enlaces `tel:` pueden fallar en silencio al marcar.** Las tarjetas de operación en `dial.html` son simples enlaces `<a href="tel:<code>">` ([dial.html:205](dial.html#L205)) — no hay capa de JS que arreglar aquí, el fallo ocurre en el navegador/SO que envuelve la página, antes de que esta intervenga:
+
+- **Navegadores integrados (in-app)** de Instagram, Facebook, TikTok, WhatsApp, etc. suelen eliminar o desactivar esquemas de URL personalizados como `tel:` por seguridad cuando el usuario abre el sitio desde un enlace dentro de esas apps. El toque no hace nada, sin error visible. Como este sitio enlaza a Facebook/Instagram/X, es plausible que parte del tráfico llegue aquí a través de un webview integrado. No existe solución del lado de la página más allá de detectar el user agent del navegador integrado y sugerir al usuario abrir el enlace en Safari/Chrome.
+- **Limitación de diálogos repetidos de iOS Safari.** Si los enlaces `tel:` se tocan varias veces seguidas en poco tiempo, iOS Safari puede activar su protección integrada contra páginas que disparan diálogos repetidamente, ofreciendo impedir que la página abra más — tras lo cual los toques siguientes dejan de mostrar el prompt de llamada hasta que se libere la restricción. *No verificado de forma independiente en dispositivo para este caso exacto, y el texto exacto varía según la versión de iOS* — se marca como comportamiento conocido/reportado, no como especificación confirmada.
+
+Ninguna de las dos se puede evitar desde el código de este repo; ambas son restricciones a nivel de plataforma, por diseño.
+
 ## Desarrollo local
 
 ```bash
