@@ -2,6 +2,7 @@ function app() {
   return {
     mobileMenuOpen: false,
     notifyOpen: false,
+    androidDownloadLoading: false,
     githubStars: null,
     darkMode: localStorage.getItem('darkMode') === 'true' ||
       (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches),
@@ -44,7 +45,7 @@ function app() {
       },
       {
         q: '¿Cuándo estará en la App Store y Play Store?',
-        a: 'Actualmente está en revisión de las tiendas — solo disponible instalando desde el código fuente en GitHub. <button onclick="window.dispatchEvent(new CustomEvent(\'notify:open\'))" class="text-navy dark:text-accent underline cursor-pointer">Suscríbete</button> para recibir una notificación en cuanto se publique.'
+        a: 'La app Android ya se puede descargar como APK desde el <a href="https://github.com/albertolicea00/Qvacell-apk/releases" onclick="event.preventDefault(); window.dispatchEvent(new CustomEvent(\'android:release\'))" class="text-navy dark:text-accent underline">último release de GitHub</a>. Para iOS, <button onclick="window.dispatchEvent(new CustomEvent(\'notify:open\'))" class="text-navy dark:text-accent underline cursor-pointer">suscríbete</button> y te avisaremos cuando esté disponible en la App Store.'
       },
       {
         q: '¿Cuánto cuesta la app?',
@@ -75,9 +76,10 @@ function app() {
         }
       });
       window.addEventListener('notify:open', () => { this.notifyOpen = true; });
+      window.addEventListener('android:release', () => { this.downloadLatestAndroid(true); });
       Promise.all([
         fetch('https://api.github.com/repos/albertolicea00/Qvacell-ios').then(r => r.json()),
-        fetch('https://api.github.com/repos/albertolicea00/Qvacell-android').then(r => r.json())
+        fetch('https://api.github.com/repos/albertolicea00/Qvacell-apk').then(r => r.json())
       ])
       .then(([ios, android]) => {
         let count = 0;
@@ -86,6 +88,39 @@ function app() {
         if (count > 0) this.githubStars = count;
       })
       .catch(() => {});
+    },
+    async downloadLatestAndroid(openReleasePage = false) {
+      if (this.androidDownloadLoading) return;
+      this.androidDownloadLoading = true;
+      const releasesUrl = 'https://github.com/albertolicea00/Qvacell-apk/releases';
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+
+      try {
+        const response = await fetch('https://api.github.com/repos/albertolicea00/Qvacell-apk/releases?per_page=20', {
+          headers: { Accept: 'application/vnd.github+json' },
+          cache: 'no-store',
+          signal: controller.signal
+        });
+        if (!response.ok) throw new Error(`GitHub returned ${response.status}`);
+
+        // Include prereleases: the GitHub APK can be available before store launch.
+        const releases = await response.json();
+        const latest = releases
+          .filter(release => !release.draft && release.published_at)
+          .sort((a, b) => new Date(b.published_at) - new Date(a.published_at))[0];
+        const apks = (latest?.assets || []).filter(asset => asset.name?.toLowerCase().endsWith('.apk'));
+        const preferred = apks.find(asset => /unlocked/i.test(asset.name) && !/debug/i.test(asset.name))
+          || apks.find(asset => !/debug/i.test(asset.name))
+          || apks[0];
+
+        window.location.assign((openReleasePage ? latest?.html_url : preferred?.browser_download_url) || latest?.html_url || releasesUrl);
+      } catch (error) {
+        window.location.assign(releasesUrl);
+      } finally {
+        clearTimeout(timeout);
+        this.androidDownloadLoading = false;
+      }
     }
   }
 }

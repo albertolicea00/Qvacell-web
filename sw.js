@@ -8,7 +8,7 @@
 // anything else it sees (the remote codes catalog, etc.) via a
 // stale-while-revalidate strategy: serve the cached copy instantly, refetch
 // in the background to keep it fresh for next time.
-const CACHE_NAME = 'qvacell-v1';
+const CACHE_NAME = 'qvacell-v2';
 
 // The catalog is precached here too (not just left to runtime interception) —
 // on a brand-new install the page's own first fetch for it fires from
@@ -107,5 +107,9 @@ self.addEventListener('fetch', (event) => {
   // untouched instead of trying to cache them.
   const scheme = new URL(event.request.url).protocol;
   if (scheme !== 'http:' && scheme !== 'https:') return;
+  // The download button must read the newest release rather than a cached API response.
+  const url = new URL(event.request.url);
+  if (url.hostname === 'api.github.com' &&
+      url.pathname === '/repos/albertolicea00/Qvacell-apk/releases') return;
   event.respondWith(staleWhileRevalidate(event.request));
 });

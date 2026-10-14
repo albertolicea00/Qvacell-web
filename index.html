@@ -182,7 +182,7 @@
         "name": "¿Cuándo estará en la App Store y Play Store?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Actualmente está en revisión de las tiendas — solo disponible instalando desde el código fuente en GitHub. Suscríbete para recibir una notificación en cuanto se publique."
+          "text": "La app Android ya se puede descargar como APK desde el último release de GitHub. Para iOS, suscríbete y te avisaremos cuando esté disponible en la App Store."
         }
       },
       {
@@ -360,22 +360,23 @@
           <a href="https://github.com/albertolicea00/Qvacell-apk?utm_source=qvacell&utm_medium=web&utm_campaign=github" target="_blank" rel="noopener" class="hover:text-navy dark:hover:text-accent transition-colors font-medium underline underline-offset-2">Android</a>
         </p>
 
-        <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8">
-          <button @click="notifyOpen = true" class="btn-primary">
+        <div class="flex flex-col sm:flex-row gap-3 justify-center mb-4">
+          <a href="https://github.com/albertolicea00/Qvacell-apk/releases" @click.prevent="downloadLatestAndroid()" class="btn-primary" :aria-busy="androidDownloadLoading">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v12m0 0l4-4m-4 4l-4-4M4 17v3h16v-3" />
+            </svg>
+            <span x-text="androidDownloadLoading ? 'Buscando APK...' : 'Descargar Android'">Descargar Android</span>
+          </a>
+          <button @click="notifyOpen = true" class="btn-ghost">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
-            Avísame cuando esté disponible
+            Notifícame para iOS
           </button>
-          <a href="dial.html" class="btn-ghost">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z" />
-            </svg>
-            Usa la versión web
-          </a>
         </div>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">¿No quieres instalar nada? <a href="dial.html" class="font-medium text-navy dark:text-accent underline underline-offset-2 hover:no-underline">Usa la versión web</a></p>
       </div>
 
       <!-- Card stack interactive carousel — always visible (desktop and mobile) -->
@@ -970,37 +971,30 @@
         <div
           class="inline-flex items-center gap-2 text-navy dark:text-accent text-xs font-semibold uppercase tracking-widest rounded-full px-4 py-1.5 mb-5">
           <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
-          Pronto en tiendas
+          Android APK disponible · iOS pronto
         </div>
 
-        <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Avísame cuando esté lista</h2>
-        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">La app está en fase beta y próximamente estará disponible en las tiendas de aplicaciones. 
-          Déjanos tu correo y te avisaremos en cuanto se publique.</p>
+        <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Android disponible, iOS en camino</h2>
+        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">Descarga el APK más reciente de Android desde GitHub. Si usas iPhone, déjanos tu correo y te avisaremos cuando llegue a la App Store.</p>
 
         <!-- CTA Button -->
-        <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8">
-          <button @click="notifyOpen = true" class="btn-primary w-full sm:w-auto px-8">
+        <div class="flex flex-col sm:flex-row gap-3 justify-center mb-4">
+          <a href="https://github.com/albertolicea00/Qvacell-apk/releases" @click.prevent="downloadLatestAndroid()" class="btn-primary w-full sm:w-auto px-8" :aria-busy="androidDownloadLoading">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 3v12m0 0l4-4m-4 4l-4-4M4 17v3h16v-3" />
+            </svg>
+            <span x-text="androidDownloadLoading ? 'Buscando APK...' : 'Descargar Android'">Descargar Android</span>
+          </a>
+          <button @click="notifyOpen = true" class="btn-ghost w-full sm:w-auto">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
             </svg>
-            Notifícame
+            Notifícame para iOS
           </button>
-          <a href="dial.html" class="btn-ghost">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z" />
-            </svg>
-            Usa la versión web
-          </a>
         </div>
-        <div class="text-sm text-gray-500 dark:text-gray-400 mt-2">
-          Código fuente en Github &nbsp;
-          <br>
-          <a href="https://github.com/albertolicea00/Qvacell-ios?utm_source=qvacell&utm_medium=web&utm_campaign=github" target="_blank" rel="noopener" class="hover:text-navy dark:hover:text-accent transition-colors font-medium underline underline-offset-2">iOS</a>
-          &nbsp;·&nbsp;
-          <a href="https://github.com/albertolicea00/Qvacell-apk?utm_source=qvacell&utm_medium=web&utm_campaign=github" target="_blank" rel="noopener" class="hover:text-navy dark:hover:text-accent transition-colors font-medium underline underline-offset-2">Android</a>
-        </div>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-8">¿No quieres instalar nada? <a href="dial.html" class="font-medium text-navy dark:text-accent underline underline-offset-2 hover:no-underline">Usa la versión web</a></p>
       </div>
     </section>
 
@@ -1050,12 +1044,11 @@
         <div
           class="inline-flex items-center gap-2 text-navy dark:text-accent text-xs font-semibold uppercase tracking-widest rounded-full px-3 py-1 mb-5">
           <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
-          Pronto en tiendas
+          iOS · Pronto en App Store
         </div>
 
-        <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Avísame cuando esté lista</h2>
-        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">La app está en beta. Déjanos tu correo
-          y serás el primero en saber cuando esté disponible en las tiendas oficiales.</p>
+        <h2 class="text-2xl font-black text-gray-900 dark:text-white mb-2">Avísame cuando llegue a iOS</h2>
+        <p class="text-gray-500 dark:text-gray-400 text-sm mb-6 leading-relaxed">Déjanos tu correo y te avisaremos cuando la app esté disponible en la App Store.</p>
 
         <div x-data="notifyForm()">
           <form @submit.prevent="submit()" class="flex flex-col gap-3">
@@ -1073,8 +1066,7 @@
             </button>
           </form>
           <p x-show="error" x-text="error" x-transition class="text-red-500 dark:text-red-400 text-xs mt-2"></p>
-          <p x-show="sent" x-transition class="text-accent text-xs mt-2 font-medium">¡Suscrito! Te avisaremos en cuanto
-            la app esté en las tiendas oficiales.</p>
+          <p x-show="sent" x-transition class="text-accent text-xs mt-2 font-medium">¡Suscrito! Te avisaremos cuando la app llegue a la App Store.</p>
         </div>
 
         <div class="flex items-center gap-3 my-3">
